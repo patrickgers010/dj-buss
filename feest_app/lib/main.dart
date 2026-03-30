@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+// Uncomment after running: flutterfire configure
+// import 'firebase_options.dart';
+import 'core/constants.dart';
 import 'app.dart';
 
 void main() async {
@@ -20,11 +25,17 @@ void main() async {
     systemNavigationBarIconBrightness: Brightness.light,
   ));
 
-  // TODO: Initialize Firebase
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // ── Firebase ───────────────────────────────────────────────
+  // Uncomment after running: flutterfire configure
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
 
-  // TODO: Initialize Stripe
+  // ── Stripe ─────────────────────────────────────────────────
+  // Uncomment after adding your Stripe publishable key in constants.dart
   // Stripe.publishableKey = StripeConfig.publishableKey;
+  // Stripe.merchantIdentifier = 'merchant.nl.swopster.feest';
+  // await Stripe.instance.applySettings();
 
   runApp(
     const ProviderScope(
