@@ -1,5 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import {
+  fetchTracks,
+  fetchUser,
+  formatDuration,
+  soundcloudConfigured,
+  type SCTrack,
+} from "@/lib/soundcloud";
 
 export const metadata: Metadata = {
   title: "DJ GERS",
@@ -31,34 +38,67 @@ const services = [
   },
 ];
 
-const mixes = [
-  {
-    title: "Late Night Session Vol. 3",
-    genre: "Tech House",
-    duration: "1:02:00",
-    embed: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/placeholder&color=%23a855f7&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "Afro Heat Mix",
-    genre: "Afrobeats",
-    duration: "45:00",
-    embed: null,
-  },
-  {
-    title: "Deep House Journey",
-    genre: "Deep House",
-    duration: "58:30",
-    embed: null,
-  },
+// Shown when SoundCloud API is not yet configured
+const FALLBACK_MIXES = [
+  { title: "Late Night Session Vol. 3", genre: "Tech House", duration: "1:02:00" },
+  { title: "Afro Heat Mix", genre: "Afrobeats", duration: "45:00" },
+  { title: "Deep House Journey", genre: "Deep House", duration: "58:30" },
 ];
 
-export default function DjGersPage() {
+async function getLiveTracks(): Promise<SCTrack[] | null> {
+  if (!soundcloudConfigured) return null;
+  try {
+    return await fetchTracks(10);
+  } catch {
+    return null;
+  }
+}
+
+async function getSoundCloudUrl(): Promise<string> {
+  if (!soundcloudConfigured) return "https://soundcloud.com/gers010";
+  try {
+    const user = await fetchUser();
+    return user.permalink
+      ? `https://soundcloud.com/${user.permalink}`
+      : "https://soundcloud.com/gers010";
+  } catch {
+    return "https://soundcloud.com/gers010";
+  }
+}
+
+function PlayIcon() {
+  return (
+    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  );
+}
+
+function TrackRow({ title, genre, duration }: { title: string; genre: string; duration: string }) {
+  return (
+    <div className="card-dark p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+      <div className="w-12 h-12 rounded-xl gradient-purple-blue flex items-center justify-center text-white shrink-0">
+        <PlayIcon />
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-white font-semibold truncate">{title}</p>
+        <p className="text-gray-500 text-sm">{genre}{duration ? ` · ${duration}` : ""}</p>
+      </div>
+      <span className="text-xs text-purple-400 border border-purple-700/40 px-3 py-1 rounded-full self-start sm:self-auto shrink-0">
+        SoundCloud
+      </span>
+    </div>
+  );
+}
+
+export default async function DjGersPage() {
+  const [liveTracks, scUrl] = await Promise.all([getLiveTracks(), getSoundCloudUrl()]);
+
   return (
     <div className="overflow-hidden">
       {/* ─── HERO ─────────────────────────────────────────────── */}
       <section className="relative min-h-[60vh] flex flex-col items-center justify-center text-center px-4 py-20">
         <div className="absolute top-0 left-1/3 w-96 h-96 bg-purple-700/20 rounded-full blur-[120px] pointer-events-none" />
-
         <div className="relative z-10">
           <p className="text-purple-400 uppercase tracking-[0.3em] text-xs font-semibold mb-4">
             Professional DJ
@@ -96,12 +136,9 @@ export default function DjGersPage() {
       {/* ─── ABOUT ────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Text */}
           <div>
             <p className="text-purple-400 uppercase tracking-[0.3em] text-xs font-semibold mb-3">About</p>
-            <h2 className="text-4xl font-black text-white mb-6">
-              The DJ Behind the Decks
-            </h2>
+            <h2 className="text-4xl font-black text-white mb-6">The DJ Behind the Decks</h2>
             <div className="space-y-4 text-gray-400 leading-relaxed">
               <p>
                 DJ GERS has been dominating dancefloors for years, crafting sets that blend technical precision with genuine passion for music. Whether it&apos;s a 200-person club or an outdoor festival stage, the energy never drops.
@@ -114,8 +151,6 @@ export default function DjGersPage() {
               </p>
             </div>
           </div>
-
-          {/* Stats */}
           <div className="grid grid-cols-2 gap-4">
             {[
               { value: "100+", label: "Events played" },
@@ -155,34 +190,47 @@ export default function DjGersPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-12">
           <p className="text-purple-400 uppercase tracking-[0.3em] text-xs font-semibold mb-3">Listen</p>
-          <h2 className="text-4xl font-black text-white">Mixes</h2>
+          <h2 className="text-4xl font-black text-white">
+            {liveTracks ? "Latest Tracks" : "Mixes"}
+          </h2>
           <p className="text-gray-500 text-sm mt-2">
-            Check out the latest sets — or find DJ GERS on SoundCloud for the full archive.
+            {liveTracks
+              ? "Live from SoundCloud — updated automatically."
+              : "Check out the latest sets — or find DJ GERS on SoundCloud for the full archive."}
           </p>
         </div>
 
         <div className="space-y-4">
-          {mixes.map((mix) => (
-            <div key={mix.title} className="card-dark p-5 flex flex-col sm:flex-row sm:items-center gap-4">
-              <div className="w-12 h-12 rounded-xl gradient-purple-blue flex items-center justify-center text-white shrink-0">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <p className="text-white font-semibold">{mix.title}</p>
-                <p className="text-gray-500 text-sm">{mix.genre} · {mix.duration}</p>
-              </div>
-              <span className="text-xs text-purple-400 border border-purple-700/40 px-3 py-1 rounded-full self-start sm:self-auto">
-                SoundCloud
-              </span>
-            </div>
-          ))}
+          {liveTracks ? (
+            liveTracks.length > 0 ? (
+              liveTracks.map((track) => (
+                <a
+                  key={track.id}
+                  href={track.permalink_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block group"
+                >
+                  <TrackRow
+                    title={track.title}
+                    genre={track.genre}
+                    duration={formatDuration(track.duration)}
+                  />
+                </a>
+              ))
+            ) : (
+              <p className="text-gray-500 text-center py-8">No public tracks yet.</p>
+            )
+          ) : (
+            FALLBACK_MIXES.map((mix) => (
+              <TrackRow key={mix.title} title={mix.title} genre={mix.genre} duration={mix.duration} />
+            ))
+          )}
         </div>
 
         <div className="text-center mt-10">
           <a
-            href="https://soundcloud.com"
+            href={scUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-neon text-sm"
