@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MVP Showcase — DJ GERS & Swopster Gatherings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:    #080810;
+    --card:  #10101c;
+    --card2: #14141f;
+    --purple: #a855f7;
+    --blue:   #3b82f6;
+    --pink:   #ec4899;
+    --cyan:   #22d3ee;
+    --amber:  #f59e0b;
+    --text:   #e2e8f0;
+    --muted:  #9ca3af;
+    --border: rgba(168,85,247,.18);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(8,8,16,.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .topbar-brand { display: flex; align-items: center; gap: 10px; }
+  .topbar-logo {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+  }
+  .topbar-title { font-weight: 800; font-size: 15px; letter-spacing: -.3px; }
+  .topbar-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .topbar-tabs { display: flex; gap: 4px; }
+  .tab-btn {
+    padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all .2s; font-family: inherit;
+  }
+  .tab-btn.active { background: var(--purple); border-color: var(--purple); color: #fff; }
+  .tab-btn:hover:not(.active) { color: var(--text); border-color: var(--purple); }
+
+  /* ── LAYOUT ── */
+  .layout { display: flex; flex: 1; }
+  .sidebar {
+    width: 200px; flex-shrink: 0;
+    position: sticky; top: 56px; height: calc(100vh - 56px);
+    overflow-y: auto; padding: 20px 12px;
+    border-right: 1px solid var(--border);
+  }
+  .sidebar-group { margin-bottom: 24px; }
+  .sidebar-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    color: var(--muted); text-transform: uppercase; padding: 0 8px 8px;
+  }
+  .sidebar-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 8px; border-radius: 8px;
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    transition: all .2s; cursor: pointer;
+  }
+  .sidebar-link:hover { background: rgba(168,85,247,.08); color: var(--text); }
+  .sidebar-link.active { background: rgba(168,85,247,.12); color: var(--purple); font-weight: 600; }
+  .sidebar-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .main { flex: 1; overflow: hidden; }
+
+  /* ── SECTIONS ── */
+  .section { display: none; }
+  .section.visible { display: block; }
+  .section-inner { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .section-header { margin-bottom: 40px; }
+  .section-header h2 {
+    font-size: 28px; font-weight: 900; letter-spacing: -.5px; margin-bottom: 6px;
+  }
+  .section-header p { color: var(--muted); font-size: 14px; }
+
+  /* ── PAGE ROWS ── */
+  .page-row { margin-bottom: 64px; }
+  .page-row-header {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+  }
+  .page-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+  }
+  .page-row-title { font-size: 20px; font-weight: 800; }
+  .page-row-route { font-size: 13px; color: var(--muted); margin-left: auto; font-family: monospace; }
+
+  .devices { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; }
+  @media (max-width: 768px) { .devices { grid-template-columns: 1fr; } }
+
+  /* ── BROWSER FRAME ── */
+  .browser {
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  }
+  .browser-chrome {
+    background: #1a1a2e; padding: 8px 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .traffic { display: flex; gap: 5px; }
+  .traffic span { width: 10px; height: 10px; border-radius: 50%; }
+  .t-red   { background: #ff5f57; }
+  .t-yel   { background: #febc2e; }
+  .t-grn   { background: #28c840; }
+  .address-bar {
+    flex: 1; background: rgba(255,255,255,.06); border-radius: 5px;
+    padding: 3px 10px; font-size: 11px; color: var(--muted); font-family: monospace;
+  }
+  .browser-body { aspect-ratio: 16/9; overflow: hidden; }
+
+  /* ── PHONE FRAME ── */
+  .phone-wrap { width: 160px; flex-shrink: 0; }
+  .phone {
+    width: 160px;
+    border-radius: 28px; overflow: hidden;
+    border: 3px solid rgba(255,255,255,.12);
+    box-shadow: 0 20px 50px rgba(0,0,0,.6);
+    position: relative;
+  }
+  .phone-notch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 50px; height: 18px; background: #000; border-radius: 0 0 12px 12px;
+    z-index: 2;
+  }
+  .phone-body { aspect-ratio: 9/19.5; overflow: hidden; }
+
+  /* ── SCREEN CONTENT HELPERS ── */
+  .sc { width: 100%; height: 100%; display: flex; flex-direction: column; background: var(--bg); overflow: hidden; }
+  .grd-purple { background: linear-gradient(135deg, var(--purple), var(--blue)); }
+  .grd-feest  { background: linear-gradient(135deg, var(--pink), var(--purple), var(--amber)); }
+  .grd-pink   { background: linear-gradient(135deg, var(--pink), var(--purple)); }
+  .grd-text-purple {
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .grd-text-feest {
+    background: linear-gradient(135deg, var(--pink), var(--purple), var(--amber));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .chip {
+    display: inline-flex; align-items: center;
+    font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 20px; letter-spacing: .05em;
+  }
+  .neon-line { height: 1px; background: linear-gradient(90deg, transparent, var(--purple), var(--blue), transparent); }
+  .card-sc { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px; }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border); margin: 64px 0; }
+
+  /* ── APP SCREEN GRID ── */
+  .app-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 28px; }
+  .app-card { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .app-card-label { font-size: 13px; font-weight: 600; color: var(--text); }
+  .app-card-sub { font-size: 11px; color: var(--muted); text-align: center; margin-top: -8px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border); padding: 32px 24px;
+    text-align: center; color: var(--muted); font-size: 13px;
+  }
+  .footer strong { color: var(--purple); }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer-deploy {
+    display: inline-flex; gap: 24px; margin-top: 16px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 24px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .deploy-step { display: flex; align-items: center; gap: 8px; }
+  .deploy-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+    font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── GLOW ORB ── */
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(40px); pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo"></div>
+    <div>
+      <div class="topbar-title">DJ GERS · Swopster Gatherings · FEEST</div>
+      <div class="topbar-sub">MVP Showcase — Built with Next.js 14 &amp; Flutter 3</div>
+    </div>
+  </div>
+  <div class="topbar-tabs">
+    <button class="tab-btn active" onclick="showSection('website', this)">🌐 Website</button>
+    <button class="tab-btn" onclick="showSection('app', this)">📱 App</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <!-- filled by JS -->
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ══ WEBSITE SECTION ══ -->
+    <div class="section visible" id="sec-website">
+    <div class="section-inner">
+
+      <div class="section-header">
+        <h2>🌐 Website — 6 pagina's</h2>
+        <p>Next.js 14 · TypeScript · Tailwind CSS · Dark Neon Design</p>
+      </div>
+
+      <!-- HOME -->
+      <div class="page-row" id="pg-home">
+        <div class="page-row-header">
+          <span class="page-badge" style="background:rgba(168,85,247,.15);color:var(--purple)">01</span>
+          <span class="page-row-title">Home</span>
+          <span class="page-row-route">/</span>
+        </div>
+        <div class="devices">
+          <div class="browser">
+            <div class="browser-chrome">
+              <div class="traffic"><span class="t-red"></span><span class="t-yel"></span><span class="t-grn"></span></div>
+              <div class="address-bar">djgers.nl/</div>
+            </div>
+            <div class="browser-body">
+              <div class="sc" style="position:relative;justify-content:center;align-items:center;gap:8px;text-align:center;padding:20px;">
+                <div class="orb" style="width:200px;height:200px;background:rgba(168,85,247,.25);top:-40px;left:-40px;"></div>
+                <div class="orb" style="width:150px;height:150px;background:rgba(59,130,246,.2);bottom:-20px;right:-20px;"></div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--muted);text-transform:uppercase">Professional DJ &amp; Events</div>
+                <div style="font-size:42px;font-weight:900;line-height:1;letter-spacing:-2px">DJ<span class="grd-text-purple">GERS</span></div>
+                <div class="neon-line" style="width:80px;margin:4px auto;"></div>
+                <div style="font-size:11px;color:var(--muted);max-width:260px">De kracht achter Swopster Gatherings &amp; FEEST. Elke set een verhaal, elke nacht onvergetelijk.</div>
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                  <span style="padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.05em" class="grd-purple">BOOK DJ GERS</span>
+                  <span style="padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.05em;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff">NEXT FEEST →</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;width:100%;max-width:380px;">
+                  <div class="card-sc">
+                    <div style="font-size:18px;margin-bottom:4px">🎧</div>
+                    <div style="font-size:11px;font-weight:700;color:var(--purple)">DJ GERS</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Techno · House · Electronic</div>
+                  </div>
+                  <div class="card-sc" style="border-color:rgba(236,72,153,.2)">
+                    <div style="font-size:18px;margin-bottom:4px">🎪</div>
+                    <div style="font-size:11px;font-weight:700;color:var(--pink)">Swopster Gatherings</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Community · Events · FEEST</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-wrap">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="phone-body">
+                <div class="sc" style="position:relative;padding:20px 10px 10px;gap:8px;align-items:center;justify-content:center;text-align:center;">
+                  <div class="orb" style="width:100px;height:100px;background:rgba(168,85,247,.3);top:-20px;left:-20px;"></div>
+                  <div style="font-size:8px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase">Swopster Gatherings</div>
+                  <div style="font-size:26px;font-weight:900;line-height:1;letter-spacing:-1px">DJ<span class="grd-text-purple">GERS</span></div>
+                  <div class="neon-line" style="width:50px;"></div>
+                  <div style="display:flex;gap:6px;margin-top:4px;">
+                    <div class="card-sc" style="flex:1;padding:6px;">
+                      <div style="font-size:14px">🎧</div>
+                      <div style="font-size:9px;font-weight:700;color:var(--purple);margin-top:2px">DJ GERS</div>
+                    </div>
+                    <div class="card-sc" style="flex:1;padding:6px;border-color:rgba(236,72,153,.2)">
+                      <div style="font-size:14px">🎪</div>
+                      <div style="font-size:9px;font-weight:700;color:var(--pink);margin-top:2px">FEEST</div>
+                    </div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:100%;">
+                    <div style="text-align:center;padding:6px;background:var(--card);border-radius:6px;">
+                      <div style="font-size:14px;font-weight:900;color:var(--purple)">3+</div>
+                      <div style="font-size:8px;color:var(--muted)">FEEST eds.</div>
+                    </div>
+                    <div style="text-align:center;padding:6px;background:var(--card);border-radius:6px;">
+                      <div style="font-size:14px;font-weight:900;color:var(--blue)">500+</div>
+                      <div style="font-size:8px;color:var(--muted)">Bezoekers</div>
+                    </div>
+                    <div style="text-align:center;padding:6px;background:var(--card);border-radius:6px;">
+                      <div style="font-size:14px;font-weight:900;color:var(--pink)">100%</div>
+                      <div style="font-size:8px;color:var(--muted)">Uitverkocht</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /HOME -->
+
+      <!-- DJ GERS -->
+      <div class="page-row" id="pg-djgers">
+        <div class="page-row-header">
+          <span class="page-badge" style="background:rgba(59,130,246,.15);color:var(--blue)">02</span>
+          <span class="page-row-title">DJ GERS</span>
+          <span class="page-row-route">/dj-gers</span>
+        </div>
+        <div class="devices">
+          <div class="browser">
+            <div class="browser-chrome">
+              <div class="traffic"><span class="t-red"></span><span class="t-yel"></span><span class="t-grn"></span></div>
+              <div class="address-bar">djgers.nl/dj-gers</div>
+            </div>
+            <div class="browser-body">
+              <div class="sc" style="padding:16px;gap:10px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <div style="width:48px;height:48px;border-radius:12px" class="grd-purple"></div>
+                  <div>
+                    <div style="font-size:22px;font-weight:900;letter-spacing:-1px"><span class="grd-text-purple">DJ GERS</span></div>
+                    <div style="font-size:10px;color:var(--muted)">Techno · Deep House · Electronic · Experimental</div>
+                  </div>
+                  <div style="margin-left:auto">
+                    <span style="padding:5px 12px;border-radius:5px;font-size:10px;font-weight:700;border:1px solid var(--purple);color:var(--purple)">BOOK NOW</span>
+                  </div>
+                </div>
+                <div class="neon-line"></div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+                  <div class="card-sc" style="text-align:center;padding:10px 6px;">
+                    <div style="font-size:16px;margin-bottom:4px">🏟️</div>
+                    <div style="font-size:10px;font-weight:700">Club Nights</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Techno & House</div>
+                  </div>
+                  <div class="card-sc" style="text-align:center;padding:10px 6px;">
+                    <div style="font-size:16px;margin-bottom:4px">🎂</div>
+                    <div style="font-size:10px;font-weight:700">Private Parties</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Op maat</div>
+                  </div>
+                  <div class="card-sc" style="text-align:center;padding:10px 6px;">
+                    <div style="font-size:16px;margin-bottom:4px">🎪</div>
+                    <div style="font-size:10px;font-weight:700">Festivals</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Outdoor stages</div>
+                  </div>
+                  <div class="card-sc" style="text-align:center;padding:10px 6px;">
+                    <div style="font-size:16px;margin-bottom:4px">🏢</div>
+                    <div style="font-size:10px;font-weight:700">Corporate</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Evenementen</div>
+                  </div>
+                </div>
+                <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em">Recente Sets</div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <div class="card-sc" style="display:flex;align-items:center;gap:10px;padding:8px 10px;">
+                    <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--purple),var(--blue))"></div>
+                    <div><div style="font-size:11px;font-weight:600">FEEST 3 — Opening Set</div><div style="font-size:9px;color:var(--muted)">2024 · 90 min</div></div>
+                    <span style="margin-left:auto;font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(168,85,247,.15);color:var(--purple)">▶ PLAY</span>
+                  </div>
+                  <div class="card-sc" style="display:flex;align-items:center;gap:10px;padding:8px 10px;">
+                    <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--blue),var(--cyan))"></div>
+                    <div><div style="font-size:11px;font-weight:600">Techno Sunday Mix</div><div style="font-size:9px;color:var(--muted)">2024 · 60 min</div></div>
+                    <span style="margin-left:auto;font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(59,130,246,.15);color:var(--blue)">▶ PLAY</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-wrap">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="phone-body">
+                <div class="sc" style="padding:20px 10px 10px;gap:8px;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="width:32px;height:32px;border-radius:8px" class="grd-purple"></div>
+                    <div style="font-size:14px;font-weight:900"><span class="grd-text-purple">DJ GERS</span></div>
+                  </div>
+                  <div style="font-size:9px;color:var(--muted)">Techno · House · Electronic</div>
+                  <div class="neon-line"></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+                    <div class="card-sc" style="text-align:center;padding:7px 4px;">
+                      <div style="font-size:12px">🏟️</div><div style="font-size:9px;font-weight:700;margin-top:3px">Club</div>
+                    </div>
+                    <div class="card-sc" style="text-align:center;padding:7px 4px;">
+                      <div style="font-size:12px">🎂</div><div style="font-size:9px;font-weight:700;margin-top:3px">Privé</div>
+                    </div>
+                    <div class="card-sc" style="text-align:center;padding:7px 4px;">
+                      <div style="font-size:12px">🎪</div><div style="font-size:9px;font-weight:700;margin-top:3px">Festival</div>
+                    </div>
+                    <div class="card-sc" style="text-align:center;padding:7px 4px;">
+                      <div style="font-size:12px">🏢</div><div style="font-size:9px;font-weight:700;margin-top:3px">Corporate</div>
+                    </div>
+                  </div>
+                  <div style="font-size:9px;font-weight:700;color:var(--muted)">SETS</div>
+                  <div class="card-sc" style="display:flex;align-items:center;gap:7px;padding:7px;">
+                    <div style="width:22px;height:22px;border-radius:5px" class="grd-purple"></div>
+                    <div><div style="font-size:9px;font-weight:600">FEEST 3 Opening</div><div style="font-size:8px;color:var(--muted)">90 min</div></div>
+                    <span style="margin-left:auto;font-size:8px;color:var(--purple)">▶</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /DJ GERS -->
+
+      <!-- FEEST -->
+      <div class="page-row" id="pg-feest">
+        <div class="page-row-header">
+          <span class="page-badge" style="background:rgba(236,72,153,.15);color:var(--pink)">04</span>
+          <span class="page-row-title">FEEST</span>
+          <span class="page-row-route">/feest</span>
+        </div>
+        <div class="devices">
+          <div class="browser">
+            <div class="browser-chrome">
+              <div class="traffic"><span class="t-red"></span><span class="t-yel"></span><span class="t-grn"></span></div>
+              <div class="address-bar">djgers.nl/feest</div>
+            </div>
+            <div class="browser-body">
+              <div class="sc" style="position:relative;padding:20px;gap:10px;justify-content:center;align-items:center;text-align:center;">
+                <div class="orb" style="width:160px;height:160px;background:rgba(236,72,153,.25);top:-30px;left:10px;"></div>
+                <div class="orb" style="width:130px;height:130px;background:rgba(245,158,11,.2);top:-10px;right:30px;"></div>
+                <div class="orb" style="width:120px;height:120px;background:rgba(168,85,247,.2);bottom:-20px;left:50%;transform:translateX(-50%);"></div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--muted);text-transform:uppercase">By Swopster Gatherings</div>
+                <div style="font-size:48px;font-weight:900;line-height:1;letter-spacing:-2px" class="grd-text-feest">FEEST</div>
+                <div style="font-size:13px;font-weight:600;color:var(--text)">Edition 3 — Het meest verwachte event van het jaar</div>
+                <div style="display:flex;gap:8px;margin-top:4px;">
+                  <span class="chip" style="background:rgba(236,72,153,.15);color:var(--pink)">📅 Datum TBA</span>
+                  <span class="chip" style="background:rgba(168,85,247,.15);color:var(--purple)">📍 Locatie TBA</span>
+                  <span class="chip" style="background:rgba(245,158,11,.15);color:var(--amber)">18+ Event</span>
+                </div>
+                <div class="neon-line" style="width:100%;margin:8px 0;"></div>
+                <div style="text-align:left;width:100%;">
+                  <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Lineup</div>
+                  <div style="display:flex;flex-direction:column;gap:5px;">
+                    <div class="card-sc" style="display:flex;align-items:center;gap:10px;border-color:rgba(236,72,153,.3)">
+                      <span class="chip" style="background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff">HEADLINER</span>
+                      <span style="font-size:12px;font-weight:700">DJ GERS</span>
+                      <span style="margin-left:auto;font-size:10px;color:var(--muted)">22:00 – 00:00</span>
+                    </div>
+                    <div class="card-sc" style="display:flex;align-items:center;gap:10px;">
+                      <span class="chip" style="background:rgba(168,85,247,.2);color:var(--purple)">SUPPORT</span>
+                      <span style="font-size:12px;font-weight:600;color:var(--muted)">TBA</span>
+                      <span style="margin-left:auto;font-size:10px;color:var(--muted)">20:00 – 22:00</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top:8px;display:flex;gap:10px;">
+                  <span style="padding:7px 18px;border-radius:7px;font-size:11px;font-weight:700;letter-spacing:.05em;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff">🎟 KOOP TICKETS</span>
+                  <span style="padding:7px 18px;border-radius:7px;font-size:11px;font-weight:700;border:1px solid var(--pink);color:var(--pink)">MEER INFO</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-wrap">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="phone-body">
+                <div class="sc" style="position:relative;padding:22px 10px 10px;gap:7px;align-items:center;text-align:center;">
+                  <div class="orb" style="width:80px;height:80px;background:rgba(236,72,153,.3);top:-10px;left:-10px;"></div>
+                  <div style="font-size:28px;font-weight:900;line-height:1;letter-spacing:-1px" class="grd-text-feest">FEEST</div>
+                  <div style="font-size:9px;color:var(--muted)">Edition 3 · By Swopster Gatherings</div>
+                  <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center">
+                    <span class="chip" style="background:rgba(236,72,153,.15);color:var(--pink);font-size:8px">📅 TBA</span>
+                    <span class="chip" style="background:rgba(245,158,11,.15);color:var(--amber);font-size:8px">18+</span>
+                  </div>
+                  <div class="card-sc" style="width:100%;border-color:rgba(236,72,153,.3);padding:7px;">
+                    <div style="font-size:8px;color:var(--pink);font-weight:700;margin-bottom:4px">HEADLINER</div>
+                    <div style="font-size:13px;font-weight:800">DJ GERS</div>
+                    <div style="font-size:8px;color:var(--muted)">22:00 – 00:00</div>
+                  </div>
+                  <div style="width:100%;padding:7px 12px;border-radius:8px;font-size:10px;font-weight:700;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;text-align:center;">
+                    🎟 KOOP TICKETS
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /FEEST -->
+
+      <!-- SWOPSTER -->
+      <div class="page-row" id="pg-swopster">
+        <div class="page-row-header">
+          <span class="page-badge" style="background:rgba(59,130,246,.15);color:var(--blue)">03</span>
+          <span class="page-row-title">Swopster Gatherings</span>
+          <span class="page-row-route">/swopster</span>
+        </div>
+        <div class="devices">
+          <div class="browser">
+            <div class="browser-chrome">
+              <div class="traffic"><span class="t-red"></span><span class="t-yel"></span><span class="t-grn"></span></div>
+              <div class="address-bar">djgers.nl/swopster</div>
+            </div>
+            <div class="browser-body">
+              <div class="sc" style="padding:16px;gap:10px;">
+                <div style="font-size:24px;font-weight:900;letter-spacing:-1px"><span class="grd-text-purple">Swopster</span> <span style="color:var(--text)">Gatherings</span></div>
+                <div style="font-size:11px;color:var(--muted);max-width:400px">Wij geloven in de kracht van community. Elk event is een kans om mensen samen te brengen, muziek te vieren en herinneringen te maken.</div>
+                <div class="neon-line"></div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+                  <div class="card-sc" style="text-align:center;padding:10px;">
+                    <div style="font-size:16px;margin-bottom:4px">🤝</div>
+                    <div style="font-size:10px;font-weight:700;color:var(--purple)">Community First</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Inclusief & warm</div>
+                  </div>
+                  <div class="card-sc" style="text-align:center;padding:10px;border-color:rgba(59,130,246,.2)">
+                    <div style="font-size:16px;margin-bottom:4px">🎵</div>
+                    <div style="font-size:10px;font-weight:700;color:var(--blue)">Music as Core</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Muziek verbindt</div>
+                  </div>
+                  <div class="card-sc" style="text-align:center;padding:10px;border-color:rgba(236,72,153,.2)">
+                    <div style="font-size:16px;margin-bottom:4px">✨</div>
+                    <div style="font-size:10px;font-weight:700;color:var(--pink)">Uniek</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Eigen identiteit</div>
+                  </div>
+                  <div class="card-sc" style="text-align:center;padding:10px;border-color:rgba(245,158,11,.2)">
+                    <div style="font-size:16px;margin-bottom:4px">⚡</div>
+                    <div style="font-size:10px;font-weight:700;color:var(--amber)">Pure Energy</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">Onvergetelijk</div>
+                  </div>
+                </div>
+                <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em">Events Timeline</div>
+                <div style="display:flex;gap:8px;">
+                  <div class="card-sc" style="flex:1;padding:8px;border-color:rgba(168,85,247,.3)">
+                    <div style="font-size:9px;color:var(--purple);font-weight:700">FEEST 1</div>
+                    <div style="font-size:10px;font-weight:600;margin-top:2px">De Start</div>
+                    <div style="font-size:8px;color:var(--muted)">150 bezoekers · 100% uitverkocht</div>
+                  </div>
+                  <div class="card-sc" style="flex:1;padding:8px;border-color:rgba(59,130,246,.3)">
+                    <div style="font-size:9px;color:var(--blue);font-weight:700">FEEST 2</div>
+                    <div style="font-size:10px;font-weight:600;margin-top:2px">De Groei</div>
+                    <div style="font-size:8px;color:var(--muted)">300 bezoekers · Groter venue</div>
+                  </div>
+                  <div class="card-sc" style="flex:1;padding:8px;border-color:rgba(236,72,153,.3)">
+                    <div style="font-size:9px;color:var(--pink);font-weight:700">FEEST 3</div>
+                    <div style="font-size:10px;font-weight:600;margin-top:2px">Coming Soon</div>
+                    <div style="font-size:8px;color:var(--muted)">Tickets · App · Stripe</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-wrap">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="phone-body">
+                <div class="sc" style="padding:22px 10px 10px;gap:8px;">
+                  <div style="font-size:15px;font-weight:900"><span class="grd-text-purple">Swopster</span></div>
+                  <div style="font-size:8px;color:var(--muted)">Community-gedreven events</div>
+                  <div class="neon-line"></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+                    <div class="card-sc" style="padding:7px;text-align:center;"><div style="font-size:12px">🤝</div><div style="font-size:8px;font-weight:700;color:var(--purple);margin-top:2px">Community</div></div>
+                    <div class="card-sc" style="padding:7px;text-align:center;border-color:rgba(59,130,246,.2)"><div style="font-size:12px">🎵</div><div style="font-size:8px;font-weight:700;color:var(--blue);margin-top:2px">Muziek</div></div>
+                    <div class="card-sc" style="padding:7px;text-align:center;border-color:rgba(236,72,153,.2)"><div style="font-size:12px">✨</div><div style="font-size:8px;font-weight:700;color:var(--pink);margin-top:2px">Uniek</div></div>
+                    <div class="card-sc" style="padding:7px;text-align:center;border-color:rgba(245,158,11,.2)"><div style="font-size:12px">⚡</div><div style="font-size:8px;font-weight:700;color:var(--amber);margin-top:2px">Energy</div></div>
+                  </div>
+                  <div style="font-size:8px;font-weight:700;color:var(--muted)">TIMELINE</div>
+                  <div style="display:flex;flex-direction:column;gap:4px;">
+                    <div class="card-sc" style="padding:6px;border-color:rgba(168,85,247,.3);display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:8px;color:var(--purple);font-weight:700">FEEST 1</span>
+                      <span style="font-size:8px;color:var(--muted)">150 bezoekers</span>
+                    </div>
+                    <div class="card-sc" style="padding:6px;border-color:rgba(59,130,246,.3);display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:8px;color:var(--blue);font-weight:700">FEEST 2</span>
+                      <span style="font-size:8px;color:var(--muted)">300 bezoekers</span>
+                    </div>
+                    <div class="card-sc" style="padding:6px;border-color:rgba(236,72,153,.3);display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:8px;color:var(--pink);font-weight:700">FEEST 3</span>
+                      <span style="font-size:8px;color:var(--muted)">Coming soon ✨</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /SWOPSTER -->
+
+      <!-- GALLERY -->
+      <div class="page-row" id="pg-gallery">
+        <div class="page-row-header">
+          <span class="page-badge" style="background:rgba(34,211,238,.15);color:var(--cyan)">05</span>
+          <span class="page-row-title">Gallery</span>
+          <span class="page-row-route">/gallery</span>
+        </div>
+        <div class="devices">
+          <div class="browser">
+            <div class="browser-chrome">
+              <div class="traffic"><span class="t-red"></span><span class="t-yel"></span><span class="t-grn"></span></div>
+              <div class="address-bar">djgers.nl/gallery</div>
+            </div>
+            <div class="browser-body">
+              <div class="sc" style="padding:16px;gap:10px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div style="font-size:22px;font-weight:900"><span class="grd-text-purple">Gallery</span></div>
+                  <div style="display:flex;gap:6px;">
+                    <span class="chip" style="background:rgba(168,85,247,.2);color:var(--purple)">Alle</span>
+                    <span class="chip" style="background:rgba(255,255,255,.05);color:var(--muted)">FEEST 3</span>
+                    <span class="chip" style="background:rgba(255,255,255,.05);color:var(--muted)">FEEST 2</span>
+                    <span class="chip" style="background:rgba(255,255,255,.05);color:var(--muted)">DJ GERS</span>
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+                  <div style="aspect-ratio:4/3;border-radius:8px;background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(59,130,246,.2));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;">🎧</div>
+                  <div style="aspect-ratio:4/3;border-radius:8px;background:linear-gradient(135deg,rgba(236,72,153,.3),rgba(168,85,247,.2));border:1px solid rgba(236,72,153,.2);display:flex;align-items:center;justify-content:center;font-size:24px;">🎪</div>
+                  <div style="aspect-ratio:4/3;border-radius:8px;background:linear-gradient(135deg,rgba(34,211,238,.2),rgba(59,130,246,.2));border:1px solid rgba(34,211,238,.2);display:flex;align-items:center;justify-content:center;font-size:24px;">💡</div>
+                  <div style="aspect-ratio:4/3;border-radius:8px;background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(236,72,153,.2));border:1px solid rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-size:24px;">🎵</div>
+                  <div style="aspect-ratio:4/3;border-radius:8px;background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(245,158,11,.2));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;">🎶</div>
+                  <div style="aspect-ratio:4/3;border-radius:8px;background:linear-gradient(135deg,rgba(59,130,246,.2),rgba(34,211,238,.2));border:1px solid rgba(59,130,246,.2);display:flex;align-items:center;justify-content:center;font-size:24px;">🌟</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-wrap">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="phone-body">
+                <div class="sc" style="padding:22px 10px 10px;gap:8px;">
+                  <div style="font-size:16px;font-weight:900"><span class="grd-text-purple">Gallery</span></div>
+                  <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                    <span class="chip" style="background:rgba(168,85,247,.2);color:var(--purple);font-size:8px">Alle</span>
+                    <span class="chip" style="background:rgba(255,255,255,.05);color:var(--muted);font-size:8px">FEEST</span>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+                    <div style="aspect-ratio:1;border-radius:7px;background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(59,130,246,.2));display:flex;align-items:center;justify-content:center;font-size:20px;">🎧</div>
+                    <div style="aspect-ratio:1;border-radius:7px;background:linear-gradient(135deg,rgba(236,72,153,.3),rgba(168,85,247,.2));display:flex;align-items:center;justify-content:center;font-size:20px;">🎪</div>
+                    <div style="aspect-ratio:1;border-radius:7px;background:linear-gradient(135deg,rgba(34,211,238,.2),rgba(59,130,246,.2));display:flex;align-items:center;justify-content:center;font-size:20px;">💡</div>
+                    <div style="aspect-ratio:1;border-radius:7px;background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(236,72,153,.2));display:flex;align-items:center;justify-content:center;font-size:20px;">🎵</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /GALLERY -->
+
+      <!-- CONTACT -->
+      <div class="page-row" id="pg-contact">
+        <div class="page-row-header">
+          <span class="page-badge" style="background:rgba(168,85,247,.15);color:var(--purple)">06</span>
+          <span class="page-row-title">Contact & Booking</span>
+          <span class="page-row-route">/contact</span>
+        </div>
+        <div class="devices">
+          <div class="browser">
+            <div class="browser-chrome">
+              <div class="traffic"><span class="t-red"></span><span class="t-yel"></span><span class="t-grn"></span></div>
+              <div class="address-bar">djgers.nl/contact</div>
+            </div>
+            <div class="browser-body">
+              <div class="sc" style="padding:16px;gap:10px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;height:100%">
+                  <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="font-size:20px;font-weight:900"><span class="grd-text-purple">Book DJ GERS</span></div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                      <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:10px;color:var(--muted);border:1px solid var(--border)">Naam *</div>
+                      <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:10px;color:var(--muted);border:1px solid var(--border)">Email *</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                      <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:10px;color:var(--muted);border:1px solid var(--border)">Telefoon</div>
+                      <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:10px;color:var(--muted);border:1px solid var(--border)">Event type ▾</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                      <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:10px;color:var(--muted);border:1px solid var(--border)">Datum</div>
+                      <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:10px;color:var(--muted);border:1px solid var(--border)">Locatie</div>
+                    </div>
+                    <div style="flex:1;padding:7px 10px;background:var(--card);border-radius:6px;font-size:10px;color:var(--muted);border:1px solid var(--border)">Bericht / details over je event...</div>
+                    <span style="padding:8px 16px;border-radius:7px;font-size:11px;font-weight:700;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;text-align:center;cursor:pointer">VERSTUUR AANVRAAG →</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div class="card-sc" style="padding:10px;">
+                      <div style="font-size:10px;font-weight:700;color:var(--purple);margin-bottom:6px">DIRECT CONTACT</div>
+                      <div style="font-size:10px;color:var(--muted);margin-bottom:3px">📧 booking@djgers.nl</div>
+                      <div style="font-size:10px;color:var(--muted)">📱 +31 6 — — — —</div>
+                    </div>
+                    <div class="card-sc" style="padding:10px;border-color:rgba(236,72,153,.2)">
+                      <div style="font-size:10px;font-weight:700;color:var(--pink);margin-bottom:6px">SOCIAL MEDIA</div>
+                      <div style="font-size:10px;color:var(--muted);margin-bottom:3px">📸 @djgers</div>
+                      <div style="font-size:10px;color:var(--muted)">🎵 @djgers.music</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-wrap">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="phone-body">
+                <div class="sc" style="padding:22px 10px 10px;gap:7px;">
+                  <div style="font-size:15px;font-weight:900"><span class="grd-text-purple">Book DJ GERS</span></div>
+                  <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:9px;color:var(--muted);border:1px solid var(--border)">Naam *</div>
+                  <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:9px;color:var(--muted);border:1px solid var(--border)">Email *</div>
+                  <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:9px;color:var(--muted);border:1px solid var(--border)">Event type ▾</div>
+                  <div style="padding:7px 10px;background:var(--card);border-radius:6px;font-size:9px;color:var(--muted);border:1px solid var(--border)">Datum</div>
+                  <div style="padding:24px 10px;background:var(--card);border-radius:6px;font-size:9px;color:var(--muted);border:1px solid var(--border)">Bericht...</div>
+                  <span style="padding:8px;border-radius:7px;font-size:10px;font-weight:700;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;text-align:center;">VERSTUUR →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /CONTACT -->
+
+    </div>
+    </div><!-- /sec-website -->
+
+    <!-- ══ APP SECTION ══ -->
+    <div class="section" id="sec-app">
+    <div class="section-inner">
+
+      <div class="section-header">
+        <h2>📱 Flutter App — 16 schermen</h2>
+        <p>Flutter 3.22 · Riverpod · Firebase · Stripe Ticketing · TikTok Feed · QR Tickets</p>
+      </div>
+
+      <div class="app-grid">
+
+        <!-- Splash -->
+        <div class="app-card">
+          <div class="phone" style="width:180px;">
+            <div class="phone-notch"></div>
+            <div class="phone-body" style="width:180px;">
+              <div class="sc" style="position:relative;justify-content:center;align-items:center;gap:10px;text-align:center;">
+                <div class="orb" style="width:120px;height:120px;background:rgba(168,85,247,.35);top:20px;left:50%;transform:translateX(-50%);"></div>
+                <div style="font-size:14px;font-weight:700;letter-spacing:.2em;color:var(--muted)">SWOPSTER</div>
+                <div style="font-size:44px;font-weight:900;letter-spacing:-2px;line-height:1" class="grd-text-feest">FEEST</div>
+                <div class="neon-line" style="width:60px;"></div>
+                <div style="font-size:10px;color:var(--muted)">Gatherings</div>
+                <div style="margin-top:20px;width:30px;height:3px;border-radius:2px;background:rgba(168,85,247,.4);"></div>
+              </div>
+            </div>
+          </div>
+          <div class="app-card-label">Splash</div>
+          <div class="app-card-sub">Geanimeerd logo + neon glow</div>
+        </div>
+
+        <!-- Feed -->
+        <div class="app-card">
+          <div class="phone" style="width:180px;">
+            <div class="phone-notch"></div>
+            <div class="phone-body" style="width:180px;">
+              <div class="sc" style="position:relative;justify-content:flex-end;padding-bottom:16px;">
+                <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(168,85,247,.15),rgba(8,8,16,.8));"></div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:.3;">🎧</div>
+                <div style="position:absolute;top:16px;left:0;right:0;display:flex;justify-content:center;gap:12px;font-size:10px;font-weight:700;">
+                  <span style="color:var(--muted)">Volgend</span>
+                  <span style="color:#fff;border-bottom:2px solid #fff;padding-bottom:2px;">Voor jou</span>
+                </div>
+                <div style="position:absolute;right:10px;bottom:60px;display:flex;flex-direction:column;gap:12px;align-items:center;">
+                  <div style="text-align:center;"><div style="font-size:18px;">❤️</div><div style="font-size:9px;color:#fff">1.2K</div></div>
+                  <div style="text-align:center;"><div style="font-size:18px;">💬</div><div style="font-size:9px;color:#fff">84</div></div>
+                  <div style="text-align:center;"><div style="font-size:18px;">↗️</div><div style="font-size:9px;color:#fff">Share</div></div>
+                </div>
+                <div style="position:relative;padding:0 12px;">
+                  <div style="font-size:10px;font-weight:700;color:#fff;margin-bottom:3px">DJ GERS 🎧</div>
+                  <div style="font-size:9px;color:rgba(255,255,255,.7)">FEEST 3 komt eraan 🔥 wie is er klaar?</div>
+                  <div style="margin-top:4px;"><span class="chip" style="background:rgba(168,85,247,.3);color:var(--purple);font-size:8px">#feest3 #djgers</span></div>
+                </div>
+                <div style="position:absolute;bottom:16px;left:12px;right:12px;display:flex;gap:4px;background:rgba(0,0,0,.3);border-radius:20px;padding:3px 4px;">
+                  <span style="font-size:8px;padding:3px 8px;background:rgba(255,255,255,.1);border-radius:15px;color:#fff">Voor jou</span>
+                  <span style="font-size:8px;padding:3px 8px;color:rgba(255,255,255,.5)">Community</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-card-label">Feed (Home)</div>
+          <div class="app-card-sub">TikTok-style vertical scroll</div>
+        </div>
+
+        <!-- FEEST Screen -->
+        <div class="app-card">
+          <div class="phone" style="width:180px;">
+            <div class="phone-notch"></div>
+            <div class="phone-body" style="width:180px;">
+              <div class="sc" style="position:relative;padding:22px 12px 12px;gap:8px;align-items:center;text-align:center;">
+                <div class="orb" style="width:100px;height:100px;background:rgba(236,72,153,.35);top:-10px;left:-10px;"></div>
+                <div class="orb" style="width:80px;height:80px;background:rgba(245,158,11,.25);top:-5px;right:-10px;"></div>
+                <div style="font-size:32px;font-weight:900;letter-spacing:-1px;line-height:1" class="grd-text-feest">FEEST</div>
+                <div style="font-size:9px;font-weight:600;color:var(--muted)">Edition 3</div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center;">
+                  <span class="chip" style="background:rgba(236,72,153,.15);color:var(--pink);font-size:8px">📅 TBA</span>
+                  <span class="chip" style="background:rgba(245,158,11,.15);color:var(--amber);font-size:8px">18+</span>
+                </div>
+                <div style="width:100%;padding:6px 8px;border-radius:8px;background:var(--card);border:1px solid rgba(236,72,153,.3);">
+                  <div style="font-size:8px;color:var(--pink);font-weight:700">HEADLINER</div>
+                  <div style="font-size:13px;font-weight:800">DJ GERS</div>
+                  <div style="font-size:8px;color:var(--muted)">22:00 – 00:00</div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:100%;">
+                  <div style="padding:5px;background:var(--card);border-radius:6px;text-align:center;font-size:10px;">🎵<div style="font-size:8px;color:var(--muted)">Live Sets</div></div>
+                  <div style="padding:5px;background:var(--card);border-radius:6px;text-align:center;font-size:10px;">🔊<div style="font-size:8px;color:var(--muted)">Sound</div></div>
+                  <div style="padding:5px;background:var(--card);border-radius:6px;text-align:center;font-size:10px;">💡<div style="font-size:8px;color:var(--muted)">Lichten</div></div>
+                </div>
+                <div style="width:100%;padding:7px;border-radius:8px;font-size:10px;font-weight:700;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;text-align:center;">
+                  🎟 KOOP TICKETS
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-card-label">FEEST Event</div>
+          <div class="app-card-sub">Lineup · Features · FAQ</div>
+        </div>
+
+        <!-- Tickets -->
+        <div class="app-card">
+          <div class="phone" style="width:180px;">
+            <div class="phone-notch"></div>
+            <div class="phone-body" style="width:180px;">
+              <div class="sc" style="padding:22px 12px 12px;gap:8px;">
+                <div style="font-size:14px;font-weight:900;text-align:center"><span class="grd-text-feest">Tickets</span></div>
+                <div style="font-size:9px;color:var(--muted);text-align:center">FEEST Edition 3</div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <div style="padding:8px;background:var(--card);border-radius:8px;border:1px solid rgba(168,85,247,.3);position:relative;">
+                    <div style="position:absolute;top:-6px;right:8px;"><span class="chip" style="background:linear-gradient(135deg,var(--pink),var(--amber));color:#fff;font-size:7px;">🔥 HOT</span></div>
+                    <div style="font-size:11px;font-weight:700;">Early Bird</div>
+                    <div style="font-size:16px;font-weight:900;color:var(--purple);margin:2px 0;">€12,50</div>
+                    <div style="font-size:8px;color:var(--muted)">Nog 12 beschikbaar</div>
+                    <div style="margin-top:6px;padding:4px 8px;border-radius:6px;font-size:9px;font-weight:700;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;text-align:center;">Koop nu</div>
+                  </div>
+                  <div style="padding:8px;background:var(--card);border-radius:8px;border:1px solid var(--border);">
+                    <div style="font-size:11px;font-weight:700;">Regular</div>
+                    <div style="font-size:16px;font-weight:900;color:var(--text);margin:2px 0;">€17,50</div>
+                    <div style="font-size:8px;color:var(--muted)">50 beschikbaar</div>
+                    <div style="margin-top:6px;padding:4px 8px;border-radius:6px;font-size:9px;font-weight:700;border:1px solid var(--purple);color:var(--purple);text-align:center;">Koop nu</div>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:center;gap:8px;margin-top:4px;">
+                  <span style="font-size:14px" title="iDEAL">🏦</span>
+                  <span style="font-size:14px" title="Visa">💳</span>
+                  <span style="font-size:14px" title="Apple Pay">🍎</span>
+                  <span style="font-size:14px" title="Google Pay">🅖</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-card-label">Tickets</div>
+          <div class="app-card-sub">Early Bird · Stripe · iDEAL</div>
+        </div>
+
+        <!-- My Tickets QR -->
+        <div class="app-card">
+          <div class="phone" style="width:180px;">
+            <div class="phone-notch"></div>
+            <div class="phone-body" style="width:180px;">
+              <div class="sc" style="padding:22px 12px 12px;gap:8px;align-items:center;">
+                <div style="width:100%;padding:8px;border-radius:10px;background:linear-gradient(135deg,rgba(236,72,153,.2),rgba(168,85,247,.2));border:1px solid rgba(168,85,247,.3);">
+                  <div style="font-size:10px;font-weight:900;text-align:center" class="grd-text-feest">FEEST Edition 3</div>
+                  <div style="font-size:8px;color:var(--muted);text-align:center">Early Bird · 1x</div>
+                </div>
+                <div style="width:110px;height:110px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:6px;">
+                  <svg width="98" height="98" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="7" height="7" x="0" y="0" fill="#000"/><rect width="5" height="5" x="1" y="1" fill="#fff"/><rect width="3" height="3" x="2" y="2" fill="#000"/>
+                    <rect width="7" height="7" x="14" y="0" fill="#000"/><rect width="5" height="5" x="15" y="1" fill="#fff"/><rect width="3" height="3" x="16" y="2" fill="#000"/>
+                    <rect width="7" height="7" x="0" y="14" fill="#000"/><rect width="5" height="5" x="1" y="15" fill="#fff"/><rect width="3" height="3" x="2" y="16" fill="#000"/>
+                    <rect x="9" y="0" width="1" height="1" fill="#000"/><rect x="11" y="0" width="1" height="1" fill="#000"/><rect x="10" y="1" width="1" height="1" fill="#000"/><rect x="9" y="2" width="2" height="1" fill="#000"/><rect x="8" y="3" width="1" height="1" fill="#000"/><rect x="11" y="4" width="2" height="1" fill="#000"/><rect x="9" y="5" width="1" height="2" fill="#000"/><rect x="14" y="8" width="7" height="1" fill="#000"/><rect x="8" y="8" width="2" height="1" fill="#000"/><rect x="0" y="8" width="5" height="1" fill="#000"/><rect x="7" y="7" width="1" height="3" fill="#000"/><rect x="0" y="9" width="1" height="3" fill="#000"/><rect x="3" y="9" width="2" height="2" fill="#000"/><rect x="8" y="10" width="3" height="1" fill="#000"/><rect x="14" y="10" width="1" height="1" fill="#000"/><rect x="17" y="9" width="1" height="3" fill="#000"/><rect x="19" y="10" width="2" height="1" fill="#000"/><rect x="11" y="11" width="2" height="1" fill="#000"/><rect x="14" y="12" width="3" height="1" fill="#000"/><rect x="8" y="14" width="2" height="1" fill="#000"/><rect x="11" y="14" width="4" height="1" fill="#000"/><rect x="17" y="14" width="4" height="1" fill="#000"/><rect x="8" y="15" width="1" height="2" fill="#000"/><rect x="11" y="16" width="1" height="1" fill="#000"/><rect x="14" y="15" width="1" height="3" fill="#000"/><rect x="17" y="16" width="2" height="1" fill="#000"/><rect x="10" y="17" width="1" height="1" fill="#000"/><rect x="12" y="17" width="2" height="1" fill="#000"/><rect x="16" y="18" width="1" height="1" fill="#000"/><rect x="19" y="17" width="2" height="2" fill="#000"/>
+                  </svg>
+                </div>
+                <div style="width:100%;height:1px;background:repeating-linear-gradient(90deg,var(--border) 0,var(--border) 6px,transparent 6px,transparent 10px);"></div>
+                <div style="font-size:9px;color:var(--muted);text-align:center;">Toon bij ingang · Overdraagbaar</div>
+                <div style="padding:5px 12px;border-radius:20px;font-size:9px;font-weight:700;border:1px solid var(--purple);color:var(--purple);">↗ Overdragen</div>
+              </div>
+            </div>
+          </div>
+          <div class="app-card-label">Mijn Tickets</div>
+          <div class="app-card-sub">QR code · Overdraagbaar</div>
+        </div>
+
+        <!-- Artists -->
+        <div class="app-card">
+          <div class="phone" style="width:180px;">
+            <div class="phone-notch"></div>
+            <div class="phone-body" style="width:180px;">
+              <div class="sc" style="padding:22px 12px 12px;gap:8px;">
+                <div style="font-size:14px;font-weight:900"><span class="grd-text-purple">Artiesten</span></div>
+                <div style="padding:8px;border-radius:10px;background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(59,130,246,.15));border:1px solid rgba(168,85,247,.3);">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--blue));flex-shrink:0;"></div>
+                    <div>
+                      <div style="font-size:12px;font-weight:800">DJ GERS</div>
+                      <div style="font-size:8px;color:var(--muted)">Resident · Headliner</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">
+                    <span class="chip" style="background:rgba(168,85,247,.2);color:var(--purple);font-size:7px">Techno</span>
+                    <span class="chip" style="background:rgba(59,130,246,.2);color:var(--blue);font-size:7px">House</span>
+                    <span class="chip" style="background:rgba(34,211,238,.2);color:var(--cyan);font-size:7px">Electronic</span>
+                  </div>
+                </div>
+                <div class="card-sc" style="display:flex;align-items:center;gap:8px;padding:8px;">
+                  <div style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:14px;">🎤</div>
+                  <div><div style="font-size:10px;font-weight:600;color:var(--muted)">Support Act</div><div style="font-size:8px;color:var(--muted)">TBA</div></div>
+                </div>
+                <div class="card-sc" style="display:flex;align-items:center;gap:8px;padding:8px;">
+                  <div style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:14px;">🎤</div>
+                  <div><div style="font-size:10px;font-weight:600;color:var(--muted)">Opening Act</div><div style="font-size:8px;color:var(--muted)">TBA</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-card-label">Artiesten</div>
+          <div class="app-card-sub">DJ GERS profiel · Mixes</div>
+        </div>
+
+        <!-- Community -->
+        <div class="app-card">
+          <div class="phone" style="width:180px;">
+            <div class="phone-notch"></div>
+            <div class="phone-body" style="width:180px;">
+              <div class="sc" style="padding:22px 12px 12px;gap:7px;">
+                <div style="font-size:14px;font-weight:900"><span class="grd-text-purple">Community</span></div>
+                <div style="padding:7px 10px;border-radius:8px;background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(168,85,247,.15));border:1px solid rgba(236,72,153,.3);font-size:9px;font-weight:700;color:var(--pink);">
+                  📣 FEEST 3 tickets live! Koop snel voordat Early Bird uitverkocht is
+                </div>
+                <div class="card-sc" style="padding:8px;gap:5px;display:flex;flex-direction:column;">
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--blue));flex-shrink:0;"></div>
+                    <div style="font-size:9px;font-weight:700;">@djgers</div>
+                    <div style="font-size:8px;color:var(--muted);margin-left:auto">2u</div>
+                  </div>
+                  <div style="font-size:9px;color:var(--text)">FEEST 3 is de biggest one yet. See you there 🔥</div>
+                  <div style="display:flex;gap:8px;font-size:8px;color:var(--muted);">
+                    <span>❤️ 234</span><span>💬 18</span><span>↗ Deel</span>
+                  </div>
+                </div>
+                <div class="card-sc" style="padding:8px;gap:5px;display:flex;flex-direction:column;">
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--amber));flex-shrink:0;"></div>
+                    <div style="font-size:9px;font-weight:700;">@swopstergath</div>
+                    <div style="font-size:8px;color:var(--muted);margin-left:auto">5u</div>
+                  </div>
+                  <div style="font-size:9px;color:var(--text)">Wie gaat er mee naar FEEST 3? Tag je crew! 🎉</div>
+                  <div style="display:flex;gap:8px;font-size:8px;color:var(--muted);">
+                    <span>❤️ 89</span><span>💬 42</span><span>↗ Deel</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-card-label">Community</div>
+          <div class="app-card-sub">Posts · Likes · Nieuws</div>
+        </div>
+
+        <!-- Profile -->
+        <div class="app-card">
+          <div class="phone" style="width:180px;">
+            <div class="phone-notch"></div>
+            <div class="phone-body" style="width:180px;">
+              <div class="sc" style="padding:22px 12px 12px;gap:8px;align-items:center;">
+                <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--blue));display:flex;align-items:center;justify-content:center;font-size:22px;">👤</div>
+                <div style="font-size:13px;font-weight:700;text-align:center">Patrick</div>
+                <div style="font-size:9px;color:var(--muted)">patrickhertgers@gmail.com</div>
+                <div style="display:flex;gap:12px;text-align:center;">
+                  <div><div style="font-size:14px;font-weight:800;color:var(--purple)">2</div><div style="font-size:8px;color:var(--muted)">Tickets</div></div>
+                  <div><div style="font-size:14px;font-weight:800;color:var(--blue)">12</div><div style="font-size:8px;color:var(--muted)">Likes</div></div>
+                  <div><div style="font-size:14px;font-weight:800;color:var(--pink)">3</div><div style="font-size:8px;color:var(--muted)">Events</div></div>
+                </div>
+                <div style="width:100%;padding:8px 10px;border-radius:10px;background:linear-gradient(135deg,rgba(236,72,153,.2),rgba(168,85,247,.2));border:1px solid rgba(236,72,153,.4);">
+                  <div style="font-size:9px;font-weight:700;color:var(--pink);margin-bottom:4px;">🔗 Swopster App</div>
+                  <div style="font-size:8px;color:var(--muted);margin-bottom:5px;">Koppel je kledingruilapp account</div>
+                  <div style="padding:4px 8px;border-radius:6px;font-size:9px;font-weight:700;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;text-align:center;">Open Swopster →</div>
+                </div>
+                <div style="width:100%;display:flex;flex-direction:column;gap:4px;">
+                  <div class="card-sc" style="display:flex;align-items:center;padding:7px 8px;font-size:9px;">🎟 Mijn Tickets<span style="margin-left:auto;color:var(--muted)">›</span></div>
+                  <div class="card-sc" style="display:flex;align-items:center;padding:7px 8px;font-size:9px;">⚙️ Instellingen<span style="margin-left:auto;color:var(--muted)">›</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-card-label">Profiel</div>
+          <div class="app-card-sub">Swopster koppeling · Tickets</div>
+        </div>
+
+      </div><!-- /app-grid -->
+
+      <div style="margin-top:48px;padding:20px;background:var(--card);border-radius:12px;border:1px solid var(--border);">
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--purple)">🔧 Tech Stack</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;font-size:12px;color:var(--muted);">
+          <div>📱 <strong style="color:var(--text)">Flutter 3.22</strong> — iOS &amp; Android</div>
+          <div>🗄️ <strong style="color:var(--text)">Firebase</strong> — Auth · Firestore · Storage</div>
+          <div>💳 <strong style="color:var(--text)">Stripe</strong> — iDEAL · Card · Apple/Google Pay</div>
+          <div>🔄 <strong style="color:var(--text)">Riverpod</strong> — State management</div>
+          <div>🧭 <strong style="color:var(--text)">go_router</strong> — Navigation</div>
+          <div>📹 <strong style="color:var(--text)">video_player</strong> — TikTok feed</div>
+          <div>🔑 <strong style="color:var(--text)">qr_flutter</strong> — QR ticket display</div>
+          <div>🔗 <strong style="color:var(--text)">url_launcher</strong> — Swopster deep link</div>
+        </div>
+      </div>
+
+    </div>
+    </div><!-- /sec-app -->
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div>Gebouwd door <strong>Claude Code</strong> voor <strong>DJ GERS &amp; Swopster Gatherings</strong></div>
+      <div style="margin-top:8px;font-size:12px;">
+        🌐 Website: Next.js 14 + TypeScript + Tailwind &nbsp;|&nbsp;
+        📱 App: Flutter 3.22 + Firebase + Stripe &nbsp;|&nbsp;
+        🎪 FEEST Edition 3 — Coming Soon
+      </div>
+      <div class="footer-deploy">
+        <div class="deploy-step">
+          <div class="deploy-num">1</div>
+          <span>Maak Firebase project aan</span>
+        </div>
+        <div class="deploy-step">
+          <div class="deploy-num">2</div>
+          <span>Deploy website op Vercel</span>
+        </div>
+        <div class="deploy-step">
+          <div class="deploy-num">3</div>
+          <span>Publiceer app in App Store &amp; Play Store</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Section data
+  const websitePages = [
+    { id: 'pg-home',     label: 'Home',                color: '#a855f7', dot: '#a855f7' },
+    { id: 'pg-djgers',   label: 'DJ GERS',             color: '#3b82f6', dot: '#3b82f6' },
+    { id: 'pg-swopster', label: 'Swopster Gatherings', color: '#3b82f6', dot: '#3b82f6' },
+    { id: 'pg-feest',    label: 'FEEST',               color: '#ec4899', dot: '#ec4899' },
+    { id: 'pg-gallery',  label: 'Gallery',             color: '#22d3ee', dot: '#22d3ee' },
+    { id: 'pg-contact',  label: 'Contact & Booking',   color: '#a855f7', dot: '#a855f7' },
+  ];
+  const appScreens = [
+    { label: 'Splash',        color: '#a855f7' },
+    { label: 'Feed (Home)',   color: '#a855f7' },
+    { label: 'FEEST Event',   color: '#ec4899' },
+    { label: 'Tickets',       color: '#ec4899' },
+    { label: 'Mijn Tickets',  color: '#a855f7' },
+    { label: 'Artiesten',     color: '#3b82f6' },
+    { label: 'Community',     color: '#3b82f6' },
+    { label: 'Profiel',       color: '#a855f7' },
+  ];
+
+  let currentSection = 'website';
+
+  function buildSidebar(section) {
+    const sb = document.getElementById('sidebar');
+    sb.innerHTML = '';
+    if (section === 'website') {
+      const grp = document.createElement('div');
+      grp.className = 'sidebar-group';
+      grp.innerHTML = '<div class="sidebar-label">Pagina\'s</div>';
+      websitePages.forEach(p => {
+        const a = document.createElement('a');
+        a.className = 'sidebar-link';
+        a.href = '#' + p.id;
+        a.innerHTML = `<span class="sidebar-dot" style="background:${p.dot}"></span>${p.label}`;
+        a.addEventListener('click', () => {
+          document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+          a.classList.add('active');
+        });
+        grp.appendChild(a);
+      });
+      sb.appendChild(grp);
+    } else {
+      const grp = document.createElement('div');
+      grp.className = 'sidebar-group';
+      grp.innerHTML = '<div class="sidebar-label">Schermen</div>';
+      appScreens.forEach(s => {
+        const a = document.createElement('div');
+        a.className = 'sidebar-link';
+        a.innerHTML = `<span class="sidebar-dot" style="background:${s.color}"></span>${s.label}`;
+        grp.appendChild(a);
+      });
+      sb.appendChild(grp);
+    }
+  }
+
+  function showSection(name, btn) {
+    currentSection = name;
+    // toggle tabs
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // toggle sections
+    document.getElementById('sec-website').classList.toggle('visible', name === 'website');
+    document.getElementById('sec-app').classList.toggle('visible', name === 'app');
+    buildSidebar(name);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // init
+  buildSidebar('website');
+
+  // highlight sidebar on scroll (website only)
+  const observer = new IntersectionObserver((entries) => {
+    if (currentSection !== 'website') return;
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        document.querySelectorAll('.sidebar-link').forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+
+  websitePages.forEach(p => {
+    const el = document.getElementById(p.id);
+    if (el) observer.observe(el);
+  });
+</script>
+</body>
+</html>
