@@ -1,0 +1,98 @@
+{
+  "__collections__": {
+    "events": {
+      "ondrstrm-3": {
+        "name": "ONDRSTRM",
+        "edition": "Edition 3",
+        "description": "De grootste editie ooit. SPL!NTR als headliner met speciale gasten. Premium sound, lichtshow en een onvergetelijke nacht.",
+        "date": null,
+        "venue": null,
+        "city": null,
+        "imageUrl": "",
+        "artistIds": ["splintr"],
+        "isUpcoming": true,
+        "status": "upcoming",
+        "ticketPriceFrom": 12.50,
+        "isFeatured": true
+      },
+      "ondrstrm-2": {
+        "name": "ONDRSTRM",
+        "edition": "Edition 2",
+        "description": "De tweede editie die de lat nog hoger legde. Extended lineup en een onvergetelijk publiek.",
+        "imageUrl": "",
+        "artistIds": ["splintr"],
+        "isUpcoming": false,
+        "status": "past",
+        "isFeatured": false
+      },
+      "ondrstrm-1": {
+        "name": "ONDRSTRM",
+        "edition": "Edition 1",
+        "description": "Waar het allemaal begon. De eerste ONDRSTRM bewees dat dit ecosysteem er was om te blijven.",
+        "imageUrl": "",
+        "artistIds": ["splintr"],
+        "isUpcoming": false,
+        "status": "past",
+        "isFeatured": false
+      }
+    },
+    "ticketTypes": {
+      "early-bird": {
+        "eventId": "ondrstrm-3",
+        "name": "Early Bird",
+        "description": "Vroegboekkorting – beperkte beschikbaarheid",
+        "price": 12.50,
+        "totalAvailable": 100,
+        "sold": 0,
+        "isAvailable": true,
+        "perks": ["Toegang tot het event", "Welkomstdrankje"]
+      },
+      "regular": {
+        "eventId": "ondrstrm-3",
+        "name": "Regular",
+        "description": "Standaard toegangsticket",
+        "price": 17.50,
+        "totalAvailable": 300,
+        "sold": 0,
+        "isAvailable": true,
+        "perks": ["Toegang tot het event"]
+      },
+      "vip": {
+        "eventId": "ondrstrm-3",
+        "name": "VIP",
+        "description": "Premium ervaring met exclusieve voordelen",
+        "price": 35.00,
+        "totalAvailable": 50,
+        "sold": 0,
+        "isAvailable": true,
+        "perks": [
+          "Toegang tot het event",
+          "VIP lounge toegang",
+          "Meet & Greet SPL!NTR",
+          "Gratis drankjes (3x)",
+          "Vroege ingang"
+        ]
+      }
+    },
+    "artists": {
+      "splintr": {
+        "name": "SPL!NTR",
+        "role": "Headliner DJ",
+        "bio": "SPL!NTR brengt jarenlang dancefloors aan het bewegen. Oprichter van ONDRSTRM — label, events en booking agency. Gespecialiseerd in RoMinimal: stripped, rolling, hypnotisch, met dub-funk en soul invloeden.",
+        "imageUrl": "",
+        "genres": ["RoMinimal", "Minimal Techno", "Dub-Funk", "Deep House"],
+        "socials": {
+          "instagram": "@splintr",
+          "soundcloud": "splintr",
+          "tiktok": "@splintr"
+        },
+        "mixes": [
+          { "title": "Late Night Session Vol. 3", "genre": "RoMinimal", "duration": "1:02:00" },
+          { "title": "Onderstroom Mix", "genre": "Dub-Funk", "duration": "45:00" },
+          { "title": "Rolling Grooves Journey", "genre": "Minimal Techno", "duration": "58:30" }
+        ],
+        "isHeadliner": true
+      }
+    }
+  }
+}

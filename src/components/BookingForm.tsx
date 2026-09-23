@@ -9,8 +9,8 @@ const eventTypes = [
   "Wedding",
   "Festival / Outdoor",
   "Corporate Event",
-  "FEEST Ticket Inquiry",
-  "Swopster Partnership",
+  "ONDRSTRM Ticket Inquiry",
+  "ONDRSTRM Partnership",
   "Other",
 ];
 
@@ -50,7 +50,7 @@ export default function BookingForm() {
         </div>
         <h3 className="text-2xl font-black text-white">Message sent!</h3>
         <p className="text-gray-400 max-w-sm">
-          Thanks for reaching out. DJ GERS or the Swopster Gatherings team will get back to you within 24 hours.
+          Thanks for reaching out. SPL!NTR or the ONDRSTRM team will get back to you within 24 hours.
         </p>
         <button
           onClick={() => {
