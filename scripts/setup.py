@@ -41,7 +41,7 @@ def main():
 
     client_id = _prompt("SoundCloud Client ID", ex.get("SOUNDCLOUD_CLIENT_ID", ""))
     client_secret = _prompt("SoundCloud Client Secret", ex.get("SOUNDCLOUD_CLIENT_SECRET", ""))
-    user = _prompt("SoundCloud username (your permalink)", ex.get("SOUNDCLOUD_USER_ID", "gers010"))
+    user = _prompt("SoundCloud username (your permalink)", ex.get("SOUNDCLOUD_USER_ID", "splintr"))
     playlist = _prompt("Playlist name for curated tracks", ex.get("PLAYLIST_NAME", "ClaudeSelects"))
     icloud = _prompt(
         "iCloud Music path",

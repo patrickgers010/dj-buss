@@ -30,7 +30,7 @@ export interface SCUser {
 const BASE = "https://api.soundcloud.com";
 const CLIENT_ID = process.env.SOUNDCLOUD_CLIENT_ID ?? "";
 const CLIENT_SECRET = process.env.SOUNDCLOUD_CLIENT_SECRET ?? "";
-const USER_PERMALINK = process.env.SOUNDCLOUD_USER_PERMALINK ?? "gers010";
+const USER_PERMALINK = process.env.SOUNDCLOUD_USER_PERMALINK ?? "splintr";
 
 // Module-level token cache (survives across requests in the same server process)
 let _token: string | null = null;

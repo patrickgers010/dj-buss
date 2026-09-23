@@ -4,7 +4,7 @@ import BookingForm from "@/components/BookingForm";
 export const metadata: Metadata = {
   title: "Book / Contact",
   description:
-    "Book DJ GERS for your event or get in touch with Swopster Gatherings about FEEST and other events.",
+    "Book SPL!NTR for your event or get in touch with ONDRSTRM about upcoming events.",
 };
 
 export default function ContactPage() {
@@ -22,8 +22,8 @@ export default function ContactPage() {
           </h1>
           <div className="divider-neon w-24 mx-auto my-5" />
           <p className="text-gray-400 text-lg max-w-lg mx-auto">
-            Want to book DJ GERS, inquire about FEEST tickets, or discuss a collaboration with
-            Swopster Gatherings? Drop a message below.
+            Want to book SPL!NTR, inquire about ONDRSTRM tickets, or discuss a collaboration with
+            the label? Drop a message below.
           </p>
         </div>
       </section>
@@ -42,26 +42,26 @@ export default function ContactPage() {
                   {
                     icon: "📧",
                     label: "Email",
-                    value: "info@djgers.nl",
+                    value: "SPLINTR@ondrstrm.com",
                     sub: "Response within 24h",
                   },
                   {
                     icon: "📍",
                     label: "Based in",
-                    value: "Netherlands",
+                    value: "Rotterdam, Netherlands",
                     sub: "Available nationwide & abroad",
                   },
                   {
                     icon: "🎧",
                     label: "Booking",
-                    value: "DJ GERS",
-                    sub: "Clubs · Parties · Festivals",
+                    value: "SPL!NTR",
+                    sub: "Clubs · Underground · Festivals",
                   },
                   {
                     icon: "🎉",
                     label: "Events",
-                    value: "Swopster Gatherings",
-                    sub: "FEEST & more",
+                    value: "ONDRSTRM",
+                    sub: "Label · Events · Agency",
                   },
                 ].map((item) => (
                   <div
@@ -92,9 +92,9 @@ export default function ContactPage() {
               </p>
               <div className="flex gap-3 flex-wrap">
                 {[
-                  { name: "Instagram", handle: "@djgers" },
-                  { name: "SoundCloud", handle: "DJ GERS" },
-                  { name: "TikTok", handle: "@djgers" },
+                  { name: "Instagram", handle: "@splintr" },
+                  { name: "SoundCloud", handle: "SPL!NTR" },
+                  { name: "TikTok", handle: "@splintr" },
                 ].map((s) => (
                   <div
                     key={s.name}

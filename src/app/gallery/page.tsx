@@ -3,30 +3,30 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Gallery",
-  description: "Photos and videos from DJ GERS performances and Swopster Gatherings events.",
+  description: "Photos and videos from SPL!NTR performances and ONDRSTRM events.",
 };
 
 // Placeholder gallery items — replace src with real images
 const photos = [
-  { id: 1, event: "FEEST Edition 2", category: "feest", color: "#1a0030", accent: "#a855f7" },
-  { id: 2, event: "FEEST Edition 2", category: "feest", color: "#1a001a", accent: "#ec4899" },
-  { id: 3, event: "DJ GERS – Club Night", category: "dj", color: "#001030", accent: "#3b82f6" },
-  { id: 4, event: "FEEST Edition 1", category: "feest", color: "#1a1000", accent: "#f59e0b" },
-  { id: 5, event: "DJ GERS – Festival", category: "dj", color: "#001a10", accent: "#22d3ee" },
-  { id: 6, event: "Swopster Gathering", category: "swopster", color: "#200015", accent: "#a855f7" },
-  { id: 7, event: "FEEST Edition 1", category: "feest", color: "#1a0020", accent: "#ec4899" },
-  { id: 8, event: "DJ GERS – Private Party", category: "dj", color: "#001530", accent: "#3b82f6" },
-  { id: 9, event: "Swopster Gathering", category: "swopster", color: "#15001a", accent: "#a855f7" },
+  { id: 1, event: "ONDRSTRM Edition 2", category: "event", color: "#1a0030", accent: "#a855f7" },
+  { id: 2, event: "ONDRSTRM Edition 2", category: "event", color: "#1a001a", accent: "#ec4899" },
+  { id: 3, event: "SPL!NTR – Club Night", category: "dj", color: "#001030", accent: "#3b82f6" },
+  { id: 4, event: "ONDRSTRM Edition 1", category: "event", color: "#1a1000", accent: "#f59e0b" },
+  { id: 5, event: "SPL!NTR – Festival", category: "dj", color: "#001a10", accent: "#22d3ee" },
+  { id: 6, event: "ONDRSTRM Gathering", category: "ondrstrm", color: "#200015", accent: "#a855f7" },
+  { id: 7, event: "ONDRSTRM Edition 1", category: "event", color: "#1a0020", accent: "#ec4899" },
+  { id: 8, event: "SPL!NTR – Private Party", category: "dj", color: "#001530", accent: "#3b82f6" },
+  { id: 9, event: "ONDRSTRM Gathering", category: "ondrstrm", color: "#15001a", accent: "#a855f7" },
 ];
 
-const categories = ["all", "feest", "dj", "swopster"] as const;
+const categories = ["all", "event", "dj", "ondrstrm"] as const;
 type Category = (typeof categories)[number];
 
 const categoryLabel: Record<Category, string> = {
   all: "All",
-  feest: "FEEST",
-  dj: "DJ GERS",
-  swopster: "Swopster",
+  event: "ONDRSTRM",
+  dj: "SPL!NTR",
+  ondrstrm: "ONDRSTRM",
 };
 
 export default function GalleryPage() {
@@ -40,7 +40,7 @@ export default function GalleryPage() {
           <h1 className="font-black text-6xl sm:text-8xl text-white tracking-tight mb-4">Gallery</h1>
           <div className="divider-neon w-24 mx-auto my-5" />
           <p className="text-gray-400 text-lg max-w-lg mx-auto">
-            Snapshots from the dancefloor — DJ GERS performances, FEEST events, and Swopster Gatherings moments.
+            Snapshots from the dancefloor — SPL!NTR performances and ONDRSTRM moments.
           </p>
         </div>
       </section>
@@ -116,8 +116,8 @@ export default function GalleryPage() {
 
         <div className="grid md:grid-cols-2 gap-6">
           {[
-            { title: "FEEST Edition 2 – Aftermovie", duration: "3:42", icon: "🎬" },
-            { title: "DJ GERS – Festival Set", duration: "12:00", icon: "🎧" },
+            { title: "ONDRSTRM Edition 2 – Aftermovie", duration: "3:42", icon: "🎬" },
+            { title: "SPL!NTR – Festival Set", duration: "12:00", icon: "🎧" },
           ].map((video) => (
             <div
               key={video.title}
@@ -139,11 +139,11 @@ export default function GalleryPage() {
       {/* ─── CTA ──────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 text-center">
         <p className="text-gray-500 mb-4 text-sm">Want to be part of the next event?</p>
-        <Link href="/feest" className="btn-pink mr-4">
-          Next FEEST
+        <Link href="/event" className="btn-pink mr-4">
+          Next ONDRSTRM
         </Link>
         <Link href="/contact" className="btn-neon">
-          Book DJ GERS
+          Book SPL!NTR
         </Link>
       </section>
     </div>

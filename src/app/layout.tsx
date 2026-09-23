@@ -5,12 +5,12 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "DJ GERS | Swopster Gatherings",
-    template: "%s | DJ GERS",
+    default: "SPL!NTR | ONDRSTRM",
+    template: "%s | SPL!NTR",
   },
   description:
-    "DJ GERS – Professional DJ for events, parties, and clubs. Swopster Gatherings organizes community events including FEEST.",
-  keywords: ["DJ GERS", "Swopster Gatherings", "FEEST", "DJ", "events", "party"],
+    "SPL!NTR – DJ & producer draaiend RoMinimal. Onderdeel van ONDRSTRM: label, events en booking agency. Klein, underground, alleen muziek.",
+  keywords: ["SPL!NTR", "ONDRSTRM", "RoMinimal", "DJ", "minimal techno", "events"],
 };
 
 export default function RootLayout({

@@ -174,7 +174,7 @@ def main():
         print("No access token — run get_token.py first.")
         sys.exit(1)
 
-    user_permalink = cfg.get("SOUNDCLOUD_USER_ID") or "gers010"
+    user_permalink = cfg.get("SOUNDCLOUD_USER_ID") or "splintr"
     playlist_name = cfg.get("PLAYLIST_NAME") or "ClaudeSelects"
 
     print(f"Resolving user: {user_permalink}")

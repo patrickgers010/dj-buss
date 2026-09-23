@@ -6,9 +6,9 @@ import { useState } from "react";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/dj-gers", label: "DJ GERS" },
-  { href: "/swopster", label: "Swopster" },
-  { href: "/feest", label: "FEEST" },
+  { href: "/splintr", label: "SPL!NTR" },
+  { href: "/ondrstrm", label: "ONDRSTRM" },
+  { href: "/event", label: "Event" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Book / Contact" },
 ];
@@ -24,10 +24,10 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-8 h-8 rounded-full gradient-purple-blue flex items-center justify-center text-white font-black text-sm shadow-lg group-hover:shadow-purple-500/50 transition-shadow">
-              G
+              S
             </div>
             <span className="font-black text-lg tracking-widest text-white group-hover:neon-text transition-all">
-              DJ<span className="gradient-text">GERS</span>
+              SPL<span className="gradient-text">!</span>NTR
             </span>
           </Link>
 

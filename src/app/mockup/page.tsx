@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Website Mockup – DJ GERS & Swopster Gatherings",
-  description: "Interactive mockup presentation of the DJ GERS & Swopster Gatherings website.",
+  title: "Website Mockup – SPL!NTR & ONDRSTRM",
+  description: "Interactive mockup presentation of the SPL!NTR & ONDRSTRM website.",
 };
 
 export default function MockupPage() {
@@ -12,10 +12,10 @@ export default function MockupPage() {
       <div className="sticky top-16 z-40 bg-[#04040a]/95 backdrop-blur border-b border-purple-900/30 px-6 py-3 flex items-center justify-between">
         <div>
           <p className="text-purple-400 text-xs uppercase tracking-widest font-semibold">Mockup Presentatie</p>
-          <h1 className="text-white font-black text-lg">DJ GERS &amp; Swopster Gatherings</h1>
+          <h1 className="text-white font-black text-lg">SPL!NTR &amp; ONDRSTRM</h1>
         </div>
         <div className="flex gap-2 text-xs">
-          {["Home", "DJ GERS", "Swopster", "FEEST", "Gallery", "Contact"].map((p) => (
+          {["Home", "SPL!NTR", "ONDRSTRM", "Event", "Gallery", "Contact"].map((p) => (
             <a key={p} href={`#${p.toLowerCase()}`}
               className="px-3 py-1.5 rounded-full border border-purple-700/40 text-purple-300 hover:bg-purple-500/10 transition-colors hidden sm:block">
               {p}
@@ -34,13 +34,13 @@ export default function MockupPage() {
               <div className="w-full h-full bg-[#080810] flex flex-col items-center justify-center gap-3 p-6 text-center">
                 <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 mx-auto" />
                 <div className="text-white font-black text-4xl tracking-tight leading-none">
-                  DJ<span style={{ background: "linear-gradient(135deg,#a855f7,#3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>GERS</span>
+                  SPL<span style={{ background: "linear-gradient(135deg,#a855f7,#3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>!</span>NTR
                 </div>
                 <div className="w-16 h-px" style={{ background: "linear-gradient(90deg,transparent,#a855f7,#3b82f6,transparent)" }} />
-                <p className="text-gray-400 text-xs max-w-xs">Professional DJ. Unforgettable nights. De kracht achter Swopster Gatherings &amp; FEEST.</p>
+                <p className="text-gray-400 text-xs max-w-xs">Stripped, rolling, hypnotic. De artiest achter ONDRSTRM &amp; het event.</p>
                 <div className="flex gap-2 mt-1">
-                  <span className="px-3 py-1 rounded text-xs text-white" style={{ background: "linear-gradient(135deg,#a855f7,#3b82f6)" }}>Book DJ GERS</span>
-                  <span className="px-3 py-1 rounded text-xs text-white" style={{ background: "linear-gradient(135deg,#ec4899,#a855f7)" }}>Next FEEST →</span>
+                  <span className="px-3 py-1 rounded text-xs text-white" style={{ background: "linear-gradient(135deg,#a855f7,#3b82f6)" }}>Book SPL!NTR</span>
+                  <span className="px-3 py-1 rounded text-xs text-white" style={{ background: "linear-gradient(135deg,#ec4899,#a855f7)" }}>Next ONDRSTRM →</span>
                 </div>
               </div>
             </MockupDevice>
@@ -48,28 +48,28 @@ export default function MockupPage() {
               <div className="w-full h-full bg-[#080810] flex flex-col gap-2 p-3 overflow-hidden">
                 <div className="rounded-lg p-3 border border-purple-700/30 bg-[#10101c] flex-1">
                   <div className="w-7 h-7 rounded bg-gradient-to-br from-purple-500 to-blue-500 mb-2" />
-                  <p className="text-white font-black text-sm">DJ <span className="text-purple-400">GERS</span></p>
-                  <p className="text-gray-500 text-xs mt-1">Club nights · Festivals · Private events</p>
+                  <p className="text-white font-black text-sm">SPL<span className="text-purple-400">!</span>NTR</p>
+                  <p className="text-gray-500 text-xs mt-1">Club nights · Festivals · Underground</p>
                 </div>
                 <div className="rounded-lg p-3 border border-pink-700/30 bg-[#10101c] flex-1">
                   <div className="w-7 h-7 rounded bg-gradient-to-br from-pink-500 to-purple-600 mb-2" />
-                  <p className="text-white font-black text-sm">Swopster <span className="text-pink-400">Gatherings</span></p>
-                  <p className="text-gray-500 text-xs mt-1">Community events · FEEST series</p>
+                  <p className="text-white font-black text-sm"><span className="text-pink-400">ONDRSTRM</span></p>
+                  <p className="text-gray-500 text-xs mt-1">Label · Events · Booking agency</p>
                 </div>
               </div>
             </MockupDevice>
           </div>
         </section>
 
-        {/* ── DJ GERS ── */}
-        <section id="dj gers">
-          <SectionLabel page="02" title="DJ GERS" route="/dj-gers" color="#a855f7" />
+        {/* ── SPL!NTR ── */}
+        <section id="spl!ntr">
+          <SectionLabel page="02" title="SPL!NTR" route="/splintr" color="#a855f7" />
           <div className="grid lg:grid-cols-2 gap-8 mt-8">
             <MockupDevice type="desktop" label="Services grid">
               <div className="w-full h-full bg-[#080810] p-5 flex flex-col gap-3">
                 <p className="text-purple-400 text-xs uppercase tracking-widest">Services</p>
                 <div className="grid grid-cols-2 gap-2 flex-1">
-                  {[["🎧","Club Nights"],["🎉","Private Parties"],["🏟️","Festivals"],["💼","Corporate"]].map(([icon, label]) => (
+                  {[["🎧","Club Nights"],["🎛️","Underground"],["🏟️","Festivals"],["💼","Bookings"]].map(([icon, label]) => (
                     <div key={label as string} className="bg-[#10101c] rounded-lg p-3 border border-purple-900/20 flex flex-col gap-1">
                       <span className="text-lg">{icon}</span>
                       <p className="text-white text-xs font-bold">{label as string}</p>
@@ -81,7 +81,7 @@ export default function MockupPage() {
             <MockupDevice type="mobile" label="Mixes sectie">
               <div className="w-full h-full bg-[#080810] p-3 flex flex-col gap-2">
                 <p className="text-purple-400 text-xs uppercase tracking-widest mb-1">Mixes</p>
-                {["Late Night Session Vol. 3","Afro Heat Mix","Deep House Journey"].map((mix) => (
+                {["Late Night Session Vol. 3","Onderstroom Mix","Rolling Grooves Journey"].map((mix) => (
                   <div key={mix} className="flex items-center gap-2 bg-[#10101c] rounded-lg p-2 border border-purple-900/20">
                     <div className="w-8 h-8 rounded bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shrink-0">
                       <span className="text-white text-xs">▶</span>
@@ -94,15 +94,15 @@ export default function MockupPage() {
           </div>
         </section>
 
-        {/* ── SWOPSTER ── */}
-        <section id="swopster">
-          <SectionLabel page="03" title="Swopster Gatherings" route="/swopster" color="#ec4899" />
+        {/* ── ONDRSTRM ── */}
+        <section id="ondrstrm">
+          <SectionLabel page="03" title="ONDRSTRM" route="/ondrstrm" color="#ec4899" />
           <div className="grid lg:grid-cols-2 gap-8 mt-8">
             <MockupDevice type="desktop" label="Merkwaarden">
               <div className="w-full h-full bg-[#080810] p-5 flex flex-col gap-3">
                 <p className="text-pink-400 text-xs uppercase tracking-widest">Onze waarden</p>
                 <div className="grid grid-cols-2 gap-2 flex-1">
-                  {[["🤝","Community First"],["🎵","Music as Core"],["✨","Uniek"],["🔥","Pure Energy"]].map(([icon, label]) => (
+                  {[["🤝","Community First"],["🎵","Music as Core"],["✨","No Show, No Hype"],["🔥","Pure Energy"]].map(([icon, label]) => (
                     <div key={label as string} className="bg-[#10101c] rounded-lg p-3 border border-pink-900/20 flex flex-col gap-1">
                       <span className="text-lg">{icon}</span>
                       <p className="text-white text-xs font-bold">{label as string}</p>
@@ -114,7 +114,7 @@ export default function MockupPage() {
             <MockupDevice type="mobile" label="Events timeline">
               <div className="w-full h-full bg-[#080810] p-3 flex flex-col gap-2">
                 <p className="text-pink-400 text-xs uppercase tracking-widest mb-1">Events</p>
-                {[{name:"FEEST Ed. 3", upcoming:true},{name:"FEEST Ed. 2",upcoming:false},{name:"FEEST Ed. 1",upcoming:false}].map((e) => (
+                {[{name:"ONDRSTRM Ed. 3", upcoming:true},{name:"ONDRSTRM Ed. 2",upcoming:false},{name:"ONDRSTRM Ed. 1",upcoming:false}].map((e) => (
                   <div key={e.name} className={`flex items-center gap-2 rounded-lg p-2 border ${e.upcoming ? "border-pink-500/40 bg-pink-500/5" : "border-white/5 bg-[#10101c]"}`}>
                     <div className={`w-2 h-2 rounded-full shrink-0 ${e.upcoming ? "bg-pink-500" : "bg-gray-600"}`} />
                     <p className="text-white text-xs font-semibold">{e.name}</p>
@@ -126,16 +126,16 @@ export default function MockupPage() {
           </div>
         </section>
 
-        {/* ── FEEST ── */}
-        <section id="feest">
-          <SectionLabel page="04" title="FEEST" route="/feest" color="#ec4899" accent="#f59e0b" />
+        {/* ── EVENT ── */}
+        <section id="event">
+          <SectionLabel page="04" title="ONDRSTRM Event" route="/event" color="#ec4899" accent="#f59e0b" />
           <div className="grid lg:grid-cols-2 gap-8 mt-8">
             <MockupDevice type="desktop" label="Event hero">
               <div className="w-full h-full bg-[#080810] flex flex-col items-center justify-center gap-3 p-5 text-center relative overflow-hidden">
                 <div className="absolute top-4 left-4 w-24 h-24 rounded-full blur-2xl" style={{background:"rgba(236,72,153,0.25)"}} />
                 <div className="absolute bottom-4 right-4 w-20 h-20 rounded-full blur-2xl" style={{background:"rgba(245,158,11,0.2)"}} />
-                <p className="text-pink-400 text-xs uppercase tracking-widest relative z-10">Swopster Gatherings presents</p>
-                <p className="font-black text-5xl relative z-10" style={{background:"linear-gradient(135deg,#ec4899,#a855f7,#f59e0b)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>FEEST</p>
+                <p className="text-pink-400 text-xs uppercase tracking-widest relative z-10">ONDRSTRM presents</p>
+                <p className="font-black text-5xl relative z-10" style={{background:"linear-gradient(135deg,#ec4899,#a855f7,#f59e0b)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>ONDRSTRM</p>
                 <p className="text-white text-sm font-semibold relative z-10">Edition 3</p>
                 <div className="flex gap-2 mt-1 relative z-10">
                   <span className="px-2 py-1 rounded-full text-xs border border-pink-500/40 text-pink-300">📅 TBA</span>
@@ -148,10 +148,10 @@ export default function MockupPage() {
                 <p className="text-pink-400 text-xs uppercase tracking-widest mb-1">Lineup</p>
                 <div className="flex items-center gap-2 rounded-lg p-2 border border-pink-500/40 bg-pink-500/5">
                   <div className="w-8 h-8 rounded bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shrink-0">
-                    <span className="text-white text-xs font-black">G</span>
+                    <span className="text-white text-xs font-black">S</span>
                   </div>
                   <div>
-                    <p className="text-white text-xs font-black">DJ GERS</p>
+                    <p className="text-white text-xs font-black">SPL!NTR</p>
                     <p className="text-gray-500 text-xs">Headliner · 22:00–00:00</p>
                   </div>
                   <span className="text-xs text-pink-400 ml-auto">★</span>
@@ -179,7 +179,7 @@ export default function MockupPage() {
             <MockupDevice type="desktop" label="Fotogrid">
               <div className="w-full h-full bg-[#080810] p-3 flex flex-col gap-2">
                 <div className="flex gap-2 mb-1">
-                  {["All","FEEST","DJ","Swopster"].map((cat, i) => (
+                  {["All","ONDRSTRM","SPL!NTR","Event"].map((cat, i) => (
                     <span key={cat} className={`px-2 py-0.5 rounded-full text-xs border ${i===0?"border-purple-500 text-purple-300":"border-white/10 text-gray-500"}`}>{cat}</span>
                   ))}
                 </div>
@@ -199,7 +199,7 @@ export default function MockupPage() {
             <MockupDevice type="mobile" label="Video highlights">
               <div className="w-full h-full bg-[#080810] p-3 flex flex-col gap-2">
                 <p className="text-purple-400 text-xs uppercase tracking-widest mb-1">Video</p>
-                {["FEEST Ed. 2 – Aftermovie","DJ GERS – Festival Set"].map((vid) => (
+                {["ONDRSTRM Ed. 2 – Aftermovie","SPL!NTR – Festival Set"].map((vid) => (
                   <div key={vid} className="flex-1 bg-[#10101c] rounded-lg border border-purple-900/20 flex flex-col items-center justify-center gap-1">
                     <div className="w-10 h-10 rounded-full border-2 border-purple-500 flex items-center justify-center">
                       <span className="text-white text-sm">▶</span>
@@ -238,7 +238,7 @@ export default function MockupPage() {
             <MockupDevice type="mobile" label="Contact info">
               <div className="w-full h-full bg-[#080810] p-3 flex flex-col gap-2">
                 <p className="text-purple-400 text-xs uppercase tracking-widest mb-1">Info</p>
-                {[{icon:"📧","label":"Email","val":"info@djgers.nl"},{icon:"📍","label":"Gebaseerd in","val":"Nederland"},{icon:"🎧","label":"Booking","val":"DJ GERS"},{icon:"🎉","label":"Events","val":"Swopster Gatherings"}].map((item) => (
+                {[{icon:"📧","label":"Email","val":"SPLINTR@ondrstrm.com"},{icon:"📍","label":"Gebaseerd in","val":"Rotterdam"},{icon:"🎧","label":"Booking","val":"SPL!NTR"},{icon:"🎉","label":"Events","val":"ONDRSTRM"}].map((item) => (
                   <div key={item.label} className="flex gap-2 bg-[#10101c] rounded-lg p-2 border border-purple-900/20">
                     <span className="text-base shrink-0">{item.icon}</span>
                     <div>
@@ -306,7 +306,7 @@ function MockupDevice({ type, label, children }: {
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
             </div>
             <div className="flex-1 bg-[#0c0c18] rounded text-gray-600 text-xs px-3 py-0.5 font-mono">
-              djgers.nl
+              ondrstrm.com
             </div>
           </div>
           {/* Screen */}
