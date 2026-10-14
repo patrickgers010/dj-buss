@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nl" className="scroll-smooth">
-      <body className="bg-[#080810] text-gray-100 min-h-screen" style={{ fontFamily: "'Inter', system-ui, -apple-system, sans-serif" }}>
+      <body className="bg-[#0b1f17] text-gray-100 min-h-screen">
         <Navbar />
         <main className="pt-16">{children}</main>
         <Footer />

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Unbounded:wght@400;600;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,6 +9,15 @@
   --neon: #a855f7;
   --neon-blue: #3b82f6;
   --neon-pink: #ec4899;
+
+  /* ── New design system (SPL!NTR / ONDRSTRM) ──────────────────
+     Rolled out on Home + shared nav/footer. Other pages still run
+     the old neon tokens above until they're redone. */
+  --ink: #0b1f17;
+  --paper: #f2f1ec;
+  --dim: #8a8a84;
+  --signal: #ff4b1f;
+  --hairline: rgba(242, 241, 236, 0.14);
 }
 
 * {
@@ -24,6 +33,48 @@ body {
   color: #e2e8f0;
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
+}
+
+/* ── New design system utilities ───────────────────────────── */
+.font-display {
+  font-family: 'Unbounded', sans-serif;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.hairline-rule {
+  width: 72px;
+  height: 2px;
+  background: var(--signal);
+}
+
+.coord-tag {
+  font-family: 'Inter', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  opacity: 0.7;
+}
+
+.underline-link {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--paper);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 6px;
+  transition: border-color 0.25s, color 0.25s;
+}
+.underline-link:hover {
+  border-color: var(--signal);
+  color: var(--signal);
 }
 
 /* Neon glow utilities */

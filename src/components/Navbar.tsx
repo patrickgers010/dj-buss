@@ -5,12 +5,11 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/splintr", label: "SPL!NTR" },
-  { href: "/ondrstrm", label: "ONDRSTRM" },
-  { href: "/event", label: "Event" },
+  { href: "/splintr", label: "Music" },
+  { href: "/event", label: "Events" },
+  { href: "/ondrstrm", label: "Ondrstrm" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/contact", label: "Book / Contact" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -18,46 +17,35 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#080810]/90 backdrop-blur-md border-b border-purple-900/30">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0b1f17]/95 backdrop-blur-md border-b border-[rgba(242,241,236,0.14)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-full gradient-purple-blue flex items-center justify-center text-white font-black text-sm shadow-lg group-hover:shadow-purple-500/50 transition-shadow">
-              S
-            </div>
-            <span className="font-black text-lg tracking-widest text-white group-hover:neon-text transition-all">
-              SPL<span className="gradient-text">!</span>NTR
-            </span>
+          <Link href="/" className="font-display font-bold text-[13px] tracking-[0.1em] text-[#8a8a84] hover:text-[#f2f1ec] transition-colors">
+            ONDRSTRM<span className="text-[#ff4b1f]">.</span>
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
               const active = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium tracking-wide transition-all duration-200 ${
-                    active
-                      ? "text-purple-400 bg-purple-500/10"
-                      : "text-gray-400 hover:text-purple-300 hover:bg-purple-500/5"
+                  className={`text-[11px] font-medium uppercase tracking-[0.18em] transition-opacity ${
+                    active ? "opacity-100 text-[#ff4b1f]" : "opacity-70 text-[#f2f1ec] hover:opacity-100"
                   }`}
                 >
                   {link.label}
                 </Link>
               );
             })}
-            <Link href="/contact" className="btn-neon-filled ml-4 text-sm py-2 px-4 lowercase tracking-normal font-semibold">
-              Book Now
-            </Link>
           </div>
 
           {/* Mobile burger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-gray-400 hover:text-purple-400 transition-colors"
+            className="md:hidden text-[#f2f1ec] opacity-80 hover:opacity-100 transition-opacity"
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,7 +61,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#10101c] border-t border-purple-900/30 px-4 py-4 flex flex-col gap-2">
+        <div className="md:hidden bg-[#0b1f17] border-t border-[rgba(242,241,236,0.14)] px-4 py-4 flex flex-col gap-1">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
@@ -81,10 +69,8 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`px-4 py-3 rounded-md text-sm font-medium tracking-wide transition-all ${
-                  active
-                    ? "text-purple-400 bg-purple-500/10"
-                    : "text-gray-400 hover:text-purple-300"
+                className={`px-2 py-3 text-xs uppercase tracking-[0.18em] transition-opacity ${
+                  active ? "text-[#ff4b1f]" : "text-[#f2f1ec] opacity-70 hover:opacity-100"
                 }`}
               >
                 {link.label}

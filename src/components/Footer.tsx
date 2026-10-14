@@ -1,56 +1,32 @@
 import Link from "next/link";
 
+const navLinks = [
+  { href: "/splintr", label: "Music" },
+  { href: "/event", label: "Events" },
+  { href: "/ondrstrm", label: "Ondrstrm" },
+  { href: "/gallery", label: "Gallery" },
+  { href: "/contact", label: "Contact" },
+];
+
 export default function Footer() {
   return (
-    <footer className="bg-[#080810] border-t border-purple-900/30 mt-24">
-      <div className="divider-neon" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Brand */}
-          <div>
-            <h3 className="font-black text-2xl tracking-widest text-white mb-2">
-              SPL<span className="gradient-text">!</span>NTR
-            </h3>
-            <p className="text-gray-500 text-sm leading-relaxed">
-              RoMinimal. Stripped, rolling, hypnotic.<br />
-              Onderdeel van het ONDRSTRM ecosysteem.
-            </p>
-          </div>
+    <footer className="bg-[#0b1f17] border-t border-[rgba(242,241,236,0.14)] mt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <span className="coord-tag">ROTTERDAM / 51.9225&deg;N</span>
 
-          {/* Links */}
-          <div>
-            <h4 className="text-purple-400 font-semibold uppercase tracking-widest text-xs mb-4">Navigation</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/" className="hover:text-purple-300 transition-colors">Home</Link></li>
-              <li><Link href="/splintr" className="hover:text-purple-300 transition-colors">SPL!NTR</Link></li>
-              <li><Link href="/ondrstrm" className="hover:text-purple-300 transition-colors">ONDRSTRM</Link></li>
-              <li><Link href="/event" className="hover:text-purple-300 transition-colors">Event</Link></li>
-              <li><Link href="/gallery" className="hover:text-purple-300 transition-colors">Gallery</Link></li>
-              <li><Link href="/contact" className="hover:text-purple-300 transition-colors">Book / Contact</Link></li>
-            </ul>
-          </div>
-
-          {/* ONDRSTRM */}
-          <div>
-            <h4 className="text-pink-400 font-semibold uppercase tracking-widest text-xs mb-4">ONDRSTRM</h4>
-            <p className="text-gray-500 text-sm leading-relaxed mb-3">
-              Label, events en booking agency. Klein, underground, alleen muziek.
-            </p>
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          {navLinks.map((link) => (
             <Link
-              href="/event"
-              className="inline-block text-sm text-pink-400 border border-pink-500/40 px-3 py-1 rounded hover:bg-pink-500/10 transition-colors"
+              key={link.href}
+              href={link.href}
+              className="text-[11px] uppercase tracking-[0.18em] text-[#f2f1ec] opacity-70 hover:opacity-100 hover:text-[#ff4b1f] transition-all"
             >
-              Upcoming: ONDRSTRM &rarr;
+              {link.label}
             </Link>
-          </div>
+          ))}
         </div>
 
-        <div className="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-600">
-          <span>&copy; {new Date().getFullYear()} SPL!NTR &amp; ONDRSTRM. All rights reserved.</span>
-          <Link href="/contact" className="text-purple-600 hover:text-purple-400 transition-colors">
-            Book a set &rarr;
-          </Link>
-        </div>
+        <span className="coord-tag">ONDRSTRM&nbsp;&mdash;&nbsp;EST. 2026</span>
       </div>
     </footer>
   );
