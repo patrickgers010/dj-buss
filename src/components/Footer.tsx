@@ -2,7 +2,9 @@ import Link from "next/link";
 
 const navLinks = [
   { href: "/splintr", label: "Music" },
-  { href: "/event", label: "Events" },
+  { href: "/label", label: "Label" },
+  { href: "/videos", label: "Videos" },
+  { href: "/moments", label: "Moments" },
   { href: "/ondrstrm", label: "Ondrstrm" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },

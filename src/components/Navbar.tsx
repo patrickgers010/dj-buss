@@ -6,7 +6,9 @@ import { useState } from "react";
 
 const navLinks = [
   { href: "/splintr", label: "Music" },
-  { href: "/event", label: "Events" },
+  { href: "/label", label: "Label" },
+  { href: "/videos", label: "Videos" },
+  { href: "/moments", label: "Moments" },
   { href: "/ondrstrm", label: "Ondrstrm" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },
@@ -25,7 +27,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => {
               const active = pathname === link.href;
               return (
@@ -45,7 +47,7 @@ export default function Navbar() {
           {/* Mobile burger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-[#f2f1ec] opacity-80 hover:opacity-100 transition-opacity"
+            className="lg:hidden text-[#f2f1ec] opacity-80 hover:opacity-100 transition-opacity"
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +63,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#0b1f17] border-t border-[rgba(242,241,236,0.14)] px-4 py-4 flex flex-col gap-1">
+        <div className="lg:hidden bg-[#0b1f17] border-t border-[rgba(242,241,236,0.14)] px-4 py-4 flex flex-col gap-1">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (

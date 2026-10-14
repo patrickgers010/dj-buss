@@ -139,7 +139,7 @@ export default function GalleryPage() {
       {/* ─── CTA ──────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 text-center">
         <p className="text-gray-500 mb-4 text-sm">Want to be part of the next event?</p>
-        <Link href="/event" className="btn-pink mr-4">
+        <Link href="/label" className="btn-pink mr-4">
           Next ONDRSTRM
         </Link>
         <Link href="/contact" className="btn-neon">

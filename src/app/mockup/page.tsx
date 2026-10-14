@@ -128,7 +128,7 @@ export default function MockupPage() {
 
         {/* ── EVENT ── */}
         <section id="event">
-          <SectionLabel page="04" title="ONDRSTRM Event" route="/event" color="#ec4899" accent="#f59e0b" />
+          <SectionLabel page="04" title="ONDRSTRM Event" route="/label" color="#ec4899" accent="#f59e0b" />
           <div className="grid lg:grid-cols-2 gap-8 mt-8">
             <MockupDevice type="desktop" label="Event hero">
               <div className="w-full h-full bg-[#080810] flex flex-col items-center justify-center gap-3 p-5 text-center relative overflow-hidden">
