@@ -46,7 +46,7 @@ export default function EventPage() {
             ONDRSTRM presents
           </p>
           <h1 className="font-black text-[clamp(5rem,20vw,14rem)] tracking-tight leading-none mb-4">
-            <span className="gradient-text-feest">ONDRSTRM</span>
+            <span className="gradient-text-ondrstrm">ONDRSTRM</span>
           </h1>
           <p className="text-white text-xl font-semibold mb-2">Edition 3</p>
           <div className="w-32 h-0.5 mx-auto my-5" style={{ background: 'linear-gradient(90deg, transparent, #ec4899, #f59e0b, transparent)' }} />
@@ -178,7 +178,7 @@ export default function EventPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-pink-900/10 via-purple-900/10 to-yellow-900/5 pointer-events-none" />
           <div className="relative z-10">
             <p className="text-6xl font-black mb-4">
-              <span className="gradient-text-feest">ONDRSTRM</span>
+              <span className="gradient-text-ondrstrm">ONDRSTRM</span>
             </p>
             <p className="text-gray-400 mb-3 text-lg">Tickets dropping soon</p>
             <p className="text-gray-500 text-sm mb-8 max-w-md mx-auto">
