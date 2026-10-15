@@ -7,6 +7,12 @@ import {
   soundcloudConfigured,
   type SCTrack,
 } from "@/lib/soundcloud";
+import {
+  fetchLatestVideos,
+  youtubeConfigured,
+  youtubeChannelUrl,
+  type YTVideo,
+} from "@/lib/youtube";
 
 export const metadata: Metadata = {
   title: "SPL!NTR",
@@ -54,6 +60,15 @@ async function getLiveTracks(): Promise<SCTrack[] | null> {
   }
 }
 
+async function getLiveVideos(): Promise<YTVideo[] | null> {
+  if (!youtubeConfigured) return null;
+  try {
+    return await fetchLatestVideos(8);
+  } catch {
+    return null;
+  }
+}
+
 async function getSoundCloudUrl(): Promise<string> {
   if (!soundcloudConfigured) return "https://soundcloud.com/splintr";
   try {
@@ -92,7 +107,11 @@ function TrackRow({ title, genre, duration }: { title: string; genre: string; du
 }
 
 export default async function SplintrPage() {
-  const [liveTracks, scUrl] = await Promise.all([getLiveTracks(), getSoundCloudUrl()]);
+  const [liveTracks, scUrl, liveVideos] = await Promise.all([
+    getLiveTracks(),
+    getSoundCloudUrl(),
+    getLiveVideos(),
+  ]);
 
   return (
     <div className="overflow-hidden">
@@ -241,6 +260,64 @@ export default async function SplintrPage() {
           </a>
         </div>
       </section>
+
+      {/* ─── VIDEOS ───────────────────────────────────────────── */}
+      {liveVideos && liveVideos.length > 0 && (
+        <section className="bg-[#0c0c18] py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <p className="text-purple-400 uppercase tracking-[0.3em] text-xs font-semibold mb-3">Watch</p>
+              <h2 className="text-4xl font-black text-white">Latest Videos</h2>
+              <p className="text-gray-500 text-sm mt-2">Live from YouTube — updated automatically.</p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {liveVideos.map((video) => (
+                <a
+                  key={video.id}
+                  href={video.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card-dark overflow-hidden group flex flex-col"
+                >
+                  <div className="relative aspect-video overflow-hidden bg-gray-900">
+                    {video.thumbnail && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={video.thumbnail}
+                        alt={video.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    )}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
+                      <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 flex-1">
+                    <p className="text-white text-sm font-semibold leading-snug line-clamp-2">{video.title}</p>
+                    <p className="text-gray-500 text-xs mt-1">
+                      {new Date(video.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <div className="text-center mt-10">
+              <a
+                href={youtubeChannelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-neon text-sm"
+              >
+                Full Channel on YouTube
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ─── CTA ──────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
